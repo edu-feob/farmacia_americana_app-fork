@@ -26,7 +26,7 @@ O processamento de OCR em uma receita fotografada não deve exceder **5 segundos
 A tela inicial (Home/Sales) deve carregar e exibir o conteúdo principal em no máximo **3 segundos** em conexões 4G.
 
 ### RNF06 - Latência do Chatbot
-O chatbot (Lumi) deve retornar a primeira resposta ao usuário em no máximo **4 segundos** após o envio da mensagem.
+O Lumi deve retornar a primeira resposta ao usuário em no máximo **4 segundos** após o envio da mensagem, tanto para respostas automáticas de dúvidas frequentes quanto para mensagens de encaminhamento ao atendente.
 
 ---
 
@@ -53,19 +53,22 @@ A interface deve se adaptar corretamente a diferentes tamanhos de tela, desde sm
 ## Escalabilidade e Arquitetura
 
 ### RNF11 - Escalabilidade do Chatbot
-A arquitetura do módulo de IA (Lumi) deve suportar múltiplos atendimentos simultâneos sem degradação de performance ou perda de contexto de conversa entre sessões distintas.
+A arquitetura do módulo de IA (Lumi) deve suportar múltiplos atendimentos simultâneos sem degradação de performance ou perda de contexto de conversa entre sessões distintas — incluindo os fluxos de resposta automática e de encaminhamento para atendente.
 
-### RNF12 - Arquitetura Orientada a Serviços
+### RNF12 - Base de Dúvidas Frequentes Atualizável
+O sistema deve permitir que o Administrador adicione, edite e remova perguntas e respostas da base de conhecimento do Lumi sem necessidade de nova publicação do aplicativo.
+
+### RNF13 - Arquitetura Orientada a Serviços
 O back-end deve ser estruturado em serviços desacoplados (ex: serviço de catálogo, serviço de IA, serviço de pedidos), facilitando a manutenção e a evolução independente de cada módulo.
 
 ---
 
 ## Usabilidade
 
-### RNF13 - Onboarding Intuitivo
+### RNF14 - Onboarding Intuitivo
 O fluxo de cadastro e primeiro acesso deve ser concluído em no máximo **4 etapas**, com indicadores de progresso visíveis ao usuário.
 
-### RNF14 - Acessibilidade Básica
+### RNF15 - Acessibilidade Básica
 O app deve seguir as diretrizes de acessibilidade do Flutter (contraste mínimo de cores, suporte a leitores de tela nativos do Android/iOS) para atender usuários com necessidades visuais.
 
 ---
