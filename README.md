@@ -6,15 +6,15 @@
 
 ## ⚠️ O Problema
 
-O atendimento via WhatsApp da farmácia sofre com baixa escalabilidade. A dependência de intervenção humana para tarefas repetitivas — consultar estoque, ler receitas, processar pagamentos — gera um efeito cascata: sobrecarga do atendente principal, desvio de função de outros colaboradores e queda na qualidade do atendimento consultivo.
+O atendimento via WhatsApp da farmácia sofre com baixa escalabilidade. A dependência de intervenção humana para tarefas repetitivas — consultar estoque, ler receitas, processar pagamentos — gera um efeito cascata: sobrecarga do atendente principal, desvio de função de outros colaboradores e queda na qualidade do atendimento.
 
-O resultado é um ciclo de ineficiência onde o estoque nem sempre é atualizado em tempo real e as necessidades dos clientes, como indicações de medicamentos isentos de prescrição (MIPs), são negligenciadas pela urgência da fila.
+O resultado é um ciclo de ineficiência onde o estoque nem sempre é atualizado em tempo real e as dúvidas recorrentes dos clientes acumulam fila, consumindo o tempo que deveria ser dedicado a atendimentos que realmente exigem um farmacêutico.
 
 ---
 
 ## 🎯 Objetivo
 
-Desenvolver um ecossistema digital em **Flutter** que atue como um braço inteligente da farmácia, fundindo a conveniência de um e-commerce (estilo iFood/Amazon) com o poder da **IA Generativa** para triagem, processamento de receitas via OCR e predição de demanda de medicamentos.
+Desenvolver um ecossistema digital em **Flutter** que atue como um braço inteligente da farmácia, fundindo a conveniência de um e-commerce (estilo iFood/Amazon) com o poder da **IA Generativa** para automatizar dúvidas recorrentes, processar receitas via OCR e prever a demanda de medicamentos de uso contínuo.
 
 ---
 
@@ -34,7 +34,7 @@ Desenvolver um ecossistema digital em **Flutter** que atue como um braço inteli
 Tela inicial com algoritmo de recomendações sazonais (ex: antialérgicos no inverno de Jacutinga), ofertas em destaque e barra de busca com autocompletar e tolerância a erros ortográficos.
 
 ### 🤖 Atendimento — Chatbot Lumi (IA Generativa)
-Central de atendimento cognitivo com linguagem natural. O Lumi realiza triagem de sintomas, indica MIPs, responde dúvidas de posologia e gera um **número de protocolo rastreável** para continuidade humana pelo farmacêutico quando necessário.
+Central de atendimento automatizado com linguagem natural. O Lumi reconhece as **dúvidas frequentes dos clientes** e responde automaticamente com **orientações básicas** sobre posologia, modo de uso e armazenamento de medicamentos — sem realizar indicações ou diagnósticos. Casos que exigem julgamento clínico ou comercial (como pedidos de indicação de remédio) são **encaminhados automaticamente para um atendente humano**, com o histórico completo da conversa preservado via protocolo rastreável.
 
 ### 📷 Receitas — OCR com IA (Visão Computacional)
 O cliente fotografa a receita médica. A IA extrai os medicamentos, valida a data de emissão e o CRM do prescritor, verifica o estoque e adiciona os itens ao carrinho automaticamente. Medicamentos controlados possuem trava de segurança obrigatória.
@@ -54,11 +54,11 @@ Histórico de pedidos, gerenciamento de dados cadastrais e o **Ciclo de Saúde**
 
 ```
 docs/
-├── rf.md         # 17 Requisitos Funcionais (3 MVPs)
-├── rnf.md        # 14 Requisitos Não Funcionais
-├── rn.md         # 12 Regras de Negócio
-├── backlog.md    # 6 Épicos · 32 User Stories
-├── UC_FarmaciaAmericanaApp.md         # 13 Casos de Uso detalhados
+├── rn.md              # 19 Requisitos Funcionais (3 MVPs)
+├── rnf.md             # 15 Requisitos Não Funcionais
+├── rn.md              # 13 Regras de Negócio
+├── backlog.md         # 6 Épicos · 34 User Stories
+├── UC_FarmaciaAmericanaApp.md              # 13 Casos de Uso detalhados
 ```
 
 ---
@@ -69,7 +69,7 @@ docs/
 |---|---|---|
 | **01** · Identidade e Segurança | Auth, LGPD, perfil do paciente | 6 |
 | **02** · Catálogo e E-commerce | Vitrine, busca, carrinho | 6 |
-| **03** · Inteligência de Atendimento | Chatbot Lumi, protocolos | 6 |
+| **03** · Inteligência de Atendimento | Chatbot Lumi, dúvidas frequentes, encaminhamento | 8 |
 | **04** · Visão Computacional | OCR, validação de receitas | 6 |
 | **05** · Checkout e Pagamentos | PIX, cartão, confirmação | 4 |
 | **06** · Fidelização e Predição | Histórico, ciclo de saúde, recompra | 4 |
@@ -83,11 +83,25 @@ MVP 1 — Jornada de Compra e Catálogo
   Catálogo dinâmico · Busca inteligente · Carrinho · Categorias · Recomendações sazonais
 
 MVP 2 — Atendimento e IA (O Diferencial)
-  Chatbot Lumi · OCR de receitas · Validação por IA · Trava de controlados · Protocolos
+  Chatbot Lumi · Dúvidas frequentes automáticas · Encaminhamento de casos complexos
+  OCR de receitas · Validação por IA · Trava de controlados · Protocolos rastreáveis
 
 MVP 3 — Checkout e Recorrência
   PIX e Cartão · Cadastro/Login · Perfil · Histórico · Predição de recompra · LGPD
 ```
+
+---
+
+## 🤖 Escopo do Chatbot Lumi
+
+O Lumi opera dentro de um escopo definido para garantir segurança e conformidade:
+
+| O Lumi **faz** | O Lumi **não faz** |
+|---|---|
+| Responder dúvidas frequentes automaticamente | Indicar ou recomendar medicamentos |
+| Fornecer orientações básicas de posologia e armazenamento | Realizar diagnósticos médicos |
+| Encaminhar casos complexos para o atendente | Responder questões clínicas ou sobre interações medicamentosas |
+| Gerar protocolo rastreável para cada sessão | Atender casos que exijam julgamento farmacêutico |
 
 ---
 
@@ -128,8 +142,8 @@ MVP 3 — Checkout e Recorrência
 | Ator | Responsabilidade |
 |---|---|
 | **Cliente (Paciente)** | Navega, compra, envia receitas e interage com o Lumi |
-| **Atendente / Farmacêutico** | Recebe protocolos e dá continuidade ao atendimento humano |
-| **Administrador** | Gerencia catálogo, estoque e configurações do sistema |
+| **Atendente / Farmacêutico** | Recebe protocolos encaminhados e dá continuidade ao atendimento humano |
+| **Administrador** | Gerencia catálogo, estoque, base de dúvidas do Lumi e configurações do sistema |
 
 ---
 
