@@ -42,18 +42,18 @@ Permitir que um novo usuário crie sua conta na plataforma para acessar as funci
   O sistema redireciona para o fluxo OAuth 2.0 do Google. Após autenticação, os dados básicos são preenchidos automaticamente e o usuário é direcionado para aceite dos termos.
 
 ### RF Relacionados
-- RF13 - Cadastro e Autenticação
-- RF17 - Consentimento LGPD
+- RF15 - Cadastro e Autenticação
+- RF19 - Consentimento LGPD
 
 ### RNF Relacionados
 - RNF01 - Proteção de Dados Sensíveis (LGPD)
 - RNF02 - Autenticação Segura
-- RNF13 - Onboarding Intuitivo
+- RNF14 - Onboarding Intuitivo
 
 ### RN Relacionadas
-- RN08 - Cadastro Obrigatório para Compra
-- RN09 - CPF Único por Conta
-- RN10 - Consentimento Explícito para Dados de Saúde
+- RN09 - Cadastro Obrigatório para Compra
+- RN10 - CPF Único por Conta
+- RN11 - Consentimento Explícito para Dados de Saúde
 
 ---
 
@@ -92,13 +92,13 @@ Permitir que o usuário acesse o sistema com uma conta já existente.
   O usuário solicita recuperação. O sistema envia um link de redefinição para o e-mail cadastrado.
 
 ### RF Relacionados
-- RF13 - Cadastro e Autenticação
+- RF15 - Cadastro e Autenticação
 
 ### RNF Relacionados
 - RNF02 - Autenticação Segura
 
 ### RN Relacionadas
-- RN08 - Cadastro Obrigatório para Compra
+- RN09 - Cadastro Obrigatório para Compra
 
 ---
 
@@ -183,7 +183,7 @@ Permitir que o usuário monte seu pedido adicionando, ajustando e removendo iten
 - RNF07 - Uptime do Sistema
 
 ### RN Relacionadas
-- RN05 - Trava de Medicamentos Controlados
+- RN06 - Trava de Medicamentos Controlados
 
 ---
 
@@ -193,47 +193,55 @@ Permitir que o usuário monte seu pedido adicionando, ajustando e removendo iten
 Usuário (Cliente)
 
 ### Objetivo
-Permitir que o usuário tire dúvidas sobre medicamentos, receba indicações de MIPs e obtenha suporte de atendimento em linguagem natural.
+Permitir que o usuário tire dúvidas frequentes e receba orientações básicas sobre medicamentos via chat, sendo encaminhado para um atendente humano quando a situação exigir.
 
 ### Pré-condições
 - Nenhuma. O chat deve ser acessível sem login para consultas gerais.
 
 ### Pós-condições
-- Dúvida do usuário respondida e protocolo de atendimento gerado.
+- Dúvida do usuário respondida automaticamente ou protocolo gerado e encaminhado ao atendente.
 
 ### Fluxo Principal
 1. O usuário acessa a tela de Atendimento e inicia uma conversa com o Lumi.
 2. O sistema gera um número de protocolo único para a sessão.
-3. O usuário descreve seus sintomas ou dúvidas em linguagem natural.
-4. O Lumi processa a mensagem e retorna uma resposta baseada em MIPs e protocolos de saúde pública.
-5. O usuário pode continuar a conversa ou encerrar o atendimento.
+3. O usuário digita sua dúvida em linguagem natural.
+4. O Lumi identifica se a dúvida se enquadra na base de perguntas frequentes.
+5. O Lumi responde automaticamente com a orientação básica correspondente.
+6. O usuário pode continuar a conversa ou encerrar o atendimento.
 
 ### Fluxos Alternativos
-- **A1 — Sintomas fora do escopo dos MIPs:**
-  O Lumi identifica que os sintomas exigem avaliação médica, informa o usuário e não sugere nenhum medicamento para a situação.
+- **A1 — Dúvida não reconhecida como frequente:**
+  O Lumi informa ao usuário que não possui uma resposta automática para aquela situação e oferece encaminhamento para um atendente humano.
 
-- **A2 — Usuário solicita indicação de controlado:**
-  O Lumi informa que não pode indicar medicamentos de uso controlado e orienta o usuário a consultar um farmacêutico.
+- **A2 — Usuário solicita indicação de remédio:**
+  O Lumi informa que não realiza indicações de medicamentos e encaminha automaticamente o atendimento para um farmacêutico, repassando o protocolo com o histórico da conversa.
 
-- **A3 — Transbordo para atendente humano:**
-  O usuário solicita falar com um atendente. O sistema encerra a sessão de IA e repassa o protocolo com o histórico completo da conversa para o atendente.
+- **A3 — Caso complexo identificado pela IA:**
+  O Lumi detecta que a dúvida envolve sintomas, interações medicamentosas ou receitas e encaminha automaticamente para um atendente, sem tentar responder.
 
-- **A4 — Pagamento pelo chat:**
+- **A4 — Usuário solicita falar com atendente:**
+  O sistema encerra a sessão de IA e repassa o protocolo com o histórico completo da conversa para o atendente humano.
+
+- **A5 — Pagamento pelo chat:**
   O usuário decide finalizar uma compra dentro do chat. O sistema redireciona para o fluxo de checkout (UC07) sem encerrar a sessão.
 
 ### RF Relacionados
-- RF06 - Chatbot de Triagem (Lumi)
-- RF10 - Protocolo de Atendimento
-- RF11 - Pagamento Conversacional
+- RF06 - Chatbot de Atendimento (Lumi)
+- RF07 - Reconhecimento de Dúvidas Frequentes
+- RF08 - Encaminhamento de Casos Complexos
+- RF12 - Protocolo de Atendimento
+- RF13 - Pagamento Conversacional
 
 ### RNF Relacionados
 - RNF06 - Latência do Chatbot
 - RNF11 - Escalabilidade do Chatbot
+- RNF12 - Base de Dúvidas Frequentes Atualizável
 
 ### RN Relacionadas
 - RN01 - Limite de Atuação da IA
-- RN02 - Alerta de Encaminhamento Médico
-- RN04 - Geração Obrigatória de Protocolo
+- RN02 - Proibição de Indicação de Remédios pela IA
+- RN03 - Encaminhamento Obrigatório de Casos Complexos
+- RN05 - Geração Obrigatória de Protocolo
 
 ---
 
@@ -277,20 +285,20 @@ Permitir que o usuário fotografe uma receita médica e tenha os medicamentos id
   Após 30 minutos, o sistema cancela automaticamente a reserva e libera os itens no estoque.
 
 ### RF Relacionados
-- RF07 - OCR de Receitas
-- RF08 - Validação de Receita por IA
-- RF09 - Trava de Segurança para Controlados
-- RF10 - Protocolo de Atendimento
+- RF09 - OCR de Receitas
+- RF10 - Validação de Receita por IA
+- RF11 - Trava de Segurança para Controlados
+- RF12 - Protocolo de Atendimento
 
 ### RNF Relacionados
 - RNF04 - Tempo de Resposta do OCR
 - RNF01 - Proteção de Dados Sensíveis (LGPD)
 
 ### RN Relacionadas
-- RN05 - Trava de Medicamentos Controlados
-- RN06 - Validade da Receita
-- RN07 - Reserva Temporária de Estoque
-- RN03 - Fluxo de Contingência do OCR
+- RN06 - Trava de Medicamentos Controlados
+- RN07 - Validade da Receita
+- RN08 - Reserva Temporária de Estoque
+- RN04 - Fluxo de Contingência do OCR
 
 ---
 
@@ -334,17 +342,17 @@ Permitir que o usuário conclua seu pedido escolhendo o método de pagamento e c
   O sistema alerta o usuário que um ou mais itens não estão mais reservados e solicita confirmação para tentar nova reserva.
 
 ### RF Relacionados
-- RF12 - Métodos de Pagamento
-- RF13 - Cadastro e Autenticação
-- RF14 - Perfil e Gerenciamento de Conta
+- RF14 - Métodos de Pagamento
+- RF15 - Cadastro e Autenticação
+- RF16 - Perfil e Gerenciamento de Conta
 
 ### RNF Relacionados
 - RNF01 - Proteção de Dados Sensíveis (LGPD)
 - RNF08 - Tratamento de Falhas
 
 ### RN Relacionadas
-- RN08 - Cadastro Obrigatório para Compra
-- RN11 - Confirmação de Pagamento Antes do Processamento
+- RN09 - Cadastro Obrigatório para Compra
+- RN12 - Confirmação de Pagamento Antes do Processamento
 
 ---
 
@@ -383,15 +391,15 @@ Permitir que o sistema antecipe a necessidade de recompra de medicamentos de uso
   O usuário acessa o carrinho normalmente e ajusta as quantidades antes de finalizar.
 
 ### RF Relacionados
-- RF15 - Histórico de Compras
-- RF16 - Predição de Recompra (Ciclo de Saúde)
+- RF17 - Histórico de Compras
+- RF18 - Predição de Recompra (Ciclo de Saúde)
 
 ### RNF Relacionados
 - RNF11 - Escalabilidade do Chatbot
 - RNF07 - Uptime do Sistema
 
 ### RN Relacionadas
-- RN12 - Notificação de Recompra Baseada em Ciclo Real
+- RN13 - Notificação de Recompra Baseada em Ciclo Real
 
 ---
 
@@ -429,16 +437,16 @@ Permitir que o usuário visualize e edite seus dados cadastrais, endereço de en
   O sistema exibe aviso sobre a irreversibilidade da ação. Após confirmação, a conta é desativada e os dados são tratados conforme a política de retenção da LGPD.
 
 ### RF Relacionados
-- RF14 - Perfil e Gerenciamento de Conta
-- RF17 - Consentimento LGPD
+- RF16 - Perfil e Gerenciamento de Conta
+- RF19 - Consentimento LGPD
 
 ### RNF Relacionados
 - RNF01 - Proteção de Dados Sensíveis (LGPD)
 - RNF03 - Controle de Acesso por Função
 
 ### RN Relacionadas
-- RN09 - CPF Único por Conta
-- RN10 - Consentimento Explícito para Dados de Saúde
+- RN10 - CPF Único por Conta
+- RN11 - Consentimento Explícito para Dados de Saúde
 
 ---
 
@@ -475,14 +483,14 @@ Permitir que o usuário acesse o histórico completo de suas compras, acompanhe 
   O sistema exibe mensagem orientando o usuário a realizar sua primeira compra.
 
 ### RF Relacionados
-- RF15 - Histórico de Compras
+- RF17 - Histórico de Compras
 
 ### RNF Relacionados
 - RNF07 - Uptime do Sistema
 - RNF03 - Controle de Acesso por Função
 
 ### RN Relacionadas
-- RN11 - Confirmação de Pagamento Antes do Processamento
+- RN12 - Confirmação de Pagamento Antes do Processamento
 
 ---
 
@@ -492,11 +500,11 @@ Permitir que o usuário acesse o histórico completo de suas compras, acompanhe 
 Atendente (Farmacêutico)
 
 ### Objetivo
-Permitir que o atendente acesse os protocolos gerados pelo chatbot Lumi, visualize o contexto completo da conversa e dê continuidade ao atendimento de forma ágil quando necessário.
+Permitir que o atendente acesse os protocolos gerados ou encaminhados pelo chatbot Lumi, visualize o contexto completo da conversa e dê continuidade ao atendimento de forma ágil.
 
 ### Pré-condições
 - O atendente deve estar autenticado com perfil "Atendente" ou "Administrador".
-- Deve existir ao menos um protocolo aberto ou transferido para atendimento humano.
+- Deve existir ao menos um protocolo aberto ou encaminhado pelo Lumi para atendimento humano.
 
 ### Pós-condições
 - Atendimento continuado com contexto preservado.
@@ -506,24 +514,28 @@ Permitir que o atendente acesse os protocolos gerados pelo chatbot Lumi, visuali
 1. O atendente acessa o painel de protocolos.
 2. O sistema lista os protocolos ativos, ordenados por prioridade e hora de abertura.
 3. O atendente seleciona um protocolo.
-4. O sistema exibe o histórico completo da conversa do usuário com o Lumi, incluindo sintomas relatados, produtos consultados e receitas enviadas.
+4. O sistema exibe o histórico completo da conversa do usuário com o Lumi, incluindo a dúvida original, as respostas automáticas fornecidas e o motivo do encaminhamento.
 5. O atendente analisa o contexto e inicia a resposta ao usuário.
 6. O atendente encerra o protocolo após resolução, registrando o desfecho.
 
 ### Fluxos Alternativos
-- **A1 — Protocolo transferido por falha de OCR:**
+- **A1 — Protocolo encaminhado por solicitação de indicação de remédio:**
+  O sistema sinaliza o protocolo com a flag "Indicação Solicitada" para que o farmacêutico saiba o motivo do encaminhamento e possa dar a orientação adequada.
+
+- **A2 — Protocolo transferido por falha de OCR:**
   O sistema sinaliza o protocolo com a flag "OCR Incompleto" e exibe a imagem da receita original para análise manual do atendente.
 
-- **A2 — Protocolo sem resposta do usuário:**
+- **A3 — Protocolo sem resposta do usuário:**
   Após tempo configurável sem interação do usuário, o protocolo é arquivado automaticamente com status "Encerrado por inatividade".
 
-- **A3 — Atendente redireciona para outro setor:**
+- **A4 — Atendente redireciona para outro setor:**
   O atendente pode transferir o protocolo para outro perfil de atendente, mantendo o histórico intacto.
 
 ### RF Relacionados
-- RF06 - Chatbot de Triagem (Lumi)
-- RF10 - Protocolo de Atendimento
-- RF07 - OCR de Receitas
+- RF06 - Chatbot de Atendimento (Lumi)
+- RF08 - Encaminhamento de Casos Complexos
+- RF12 - Protocolo de Atendimento
+- RF09 - OCR de Receitas
 
 ### RNF Relacionados
 - RNF03 - Controle de Acesso por Função
@@ -531,8 +543,9 @@ Permitir que o atendente acesse os protocolos gerados pelo chatbot Lumi, visuali
 - RNF07 - Uptime do Sistema
 
 ### RN Relacionadas
-- RN03 - Fluxo de Contingência do OCR
-- RN04 - Geração Obrigatória de Protocolo
+- RN03 - Encaminhamento Obrigatório de Casos Complexos
+- RN04 - Fluxo de Contingência do OCR
+- RN05 - Geração Obrigatória de Protocolo
 
 ---
 
@@ -542,7 +555,7 @@ Permitir que o atendente acesse os protocolos gerados pelo chatbot Lumi, visuali
 Usuário (Cliente)
 
 ### Objetivo
-Permitir que o usuário descubra produtos relevantes ao contexto atual (sazonalidade, promoções e histórico) diretamente na tela inicial, sem necessidade de busca ativa.
+Permitir que o usuário descubra produtos relevantes ao contexto atual (sazonalidade e histórico) diretamente na tela inicial, sem necessidade de busca ativa.
 
 ### Pré-condições
 - Nenhuma. A Home deve ser acessível sem login.
@@ -554,16 +567,16 @@ Permitir que o usuário descubra produtos relevantes ao contexto atual (sazonali
 
 ### Fluxo Principal
 1. O usuário abre o app e é direcionado para a Home.
-2. O sistema carrega o bloco de destaques sazonais com base nas regras configuradas (ex: antialérgicos no inverno, protetor solar no verão).
+2. O sistema carrega o bloco de destaques sazonais com base nas regras configuradas.
 3. O sistema exibe os produtos em destaque com nome, imagem, preço e disponibilidade.
 4. O usuário toca em um produto para ver os detalhes ou o adiciona diretamente ao carrinho.
 
 ### Fluxos Alternativos
 - **A1 — Usuário autenticado com histórico:**
-  O sistema personaliza o bloco de destaques cruzando as regras sazonais com os produtos mais comprados pelo usuário, priorizando relevância individual.
+  O sistema personaliza o bloco de destaques cruzando as regras sazonais com os produtos mais comprados pelo usuário.
 
 - **A2 — Produto em destaque esgotado:**
-  O sistema substitui automaticamente o produto esgotado pelo próximo da fila de destaques configurada, sem exibir lacunas na vitrine.
+  O sistema substitui automaticamente o produto esgotado pelo próximo da fila de destaques configurada.
 
 - **A3 — Falha no carregamento dos destaques:**
   O sistema exibe o catálogo padrão sem o bloco sazonal e registra o incidente em log, sem travar a tela.
@@ -611,22 +624,26 @@ Permitir que o administrador cadastre, edite, ative e desative produtos no catá
   O sistema exibe um aviso informando que o produto possui estoque e solicita confirmação da desativação.
 
 - **A3 — Atualização de estoque:**
-  O administrador pode editar apenas a quantidade em estoque de um produto sem precisar editar os demais campos, agilizando o processo de reposição.
+  O administrador pode editar apenas a quantidade em estoque de um produto sem precisar editar os demais campos.
 
 - **A4 — Produto da categoria "Controlados":**
   O sistema aplica automaticamente a flag de trava de receita ao produto, sem necessidade de configuração manual pelo administrador.
 
+- **A5 — Gerenciar base de dúvidas frequentes do Lumi:**
+  O administrador acessa a seção de conhecimento do chatbot, adiciona novas perguntas e respostas ou edita as existentes. As alterações são aplicadas ao Lumi sem necessidade de nova publicação do app.
+
 ### RF Relacionados
 - RF01 - Catálogo Dinâmico
 - RF04 - Gestão de Categorias
-- RF09 - Trava de Segurança para Controlados
+- RF11 - Trava de Segurança para Controlados
 
 ### RNF Relacionados
 - RNF03 - Controle de Acesso por Função
-- RNF12 - Arquitetura Orientada a Serviços
+- RNF12 - Base de Dúvidas Frequentes Atualizável
+- RNF13 - Arquitetura Orientada a Serviços
 
 ### RN Relacionadas
-- RN05 - Trava de Medicamentos Controlados
+- RN06 - Trava de Medicamentos Controlados
 
 ---
 
