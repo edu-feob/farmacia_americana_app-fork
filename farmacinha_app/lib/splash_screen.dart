@@ -1,5 +1,23 @@
+import 'package:farmacia_app/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Drogaria Americana Saúde',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFE31E24)),
+        useMaterial3: true,
+      ),
+      home: const SplashScreen(),
+    );
+  }
+}
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -7,82 +25,125 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+
   @override
   void initState() {
     super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeIn,
+      ),
+    );
+
+    _animationController.forward();
+
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()), // Secondary Screen
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
         );
       }
     });
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255), 
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center, 
-            children: [
-              Center(
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.red, 
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: const Text(
-                    'A',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 255, 221, 0), 
-                      fontSize: 70,
-                      fontWeight: FontWeight.w800,
-                      decoration: TextDecoration.none,
-                    ),
-                  ),
-                ),
-              ),
-              
-              const SizedBox(height: 35),
-              
-              const Text(
-                'Farmácia Americana',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w800,
-                  decoration: TextDecoration.none,
-                ),
-              ),
-              
-              const SizedBox(height: 10),
-              
-              const Text(
-                'Sua doença, nossa alegria!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.italic,
-                  decoration: TextDecoration.none,
-                ),
-              ),
-            ],
+      backgroundColor: Colors.white,
+      body: Center(
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40.0),
+            child: _buildLogo(),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'DROGARIA',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFFE31E24),
+            letterSpacing: 6,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              'AMERIC',
+              style: const TextStyle(
+                fontSize: 52,
+                fontWeight: FontWeight.w900,
+                color: Color(0xFF1A1A1A),
+                height: 1.0,
+              ),
+            ),
+            Container(
+              color: const Color(0xFFFFD700),
+              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+              child: const Text(
+                'A',
+                style: TextStyle(
+                  fontSize: 52,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFF1A1A1A),
+                  height: 1.0,
+                ),
+              ),
+            ),
+            Text(
+              'NA',
+              style: const TextStyle(
+                fontSize: 52,
+                fontWeight: FontWeight.w900,
+                color: Color(0xFF1A1A1A),
+                height: 1.0,
+              ),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            'SAÚDE',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: const Color(0xFFE31E24),
+              letterSpacing: 5,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
