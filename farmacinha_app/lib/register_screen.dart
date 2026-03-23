@@ -103,6 +103,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                 const SizedBox(height: 28),
+
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed: _acceptedTerms ? () {} : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Pallete.actionButton,
+                      disabledBackgroundColor: Pallete.actionButton.withOpacity(
+                        0.4,
+                      ),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'CRIAR CONTA',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 28),
               ],
             ),
           ),
