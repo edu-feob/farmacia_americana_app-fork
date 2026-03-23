@@ -21,7 +21,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: const SafeArea(child: SizedBox.expand()),
+      body: const SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 32.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 8),
+
+                Text(
+                  'Criar conta',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Pallete.actionButton,
+                  ),
+                ),
+
+                SizedBox(height: 36),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
