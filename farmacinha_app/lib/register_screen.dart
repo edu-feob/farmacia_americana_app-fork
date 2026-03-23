@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:farmacia_app/pallete.dart';
 import 'package:farmacia_app/widgets/login_field.dart';
+import 'package:farmacia_app/widgets/social.button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -111,6 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: _acceptedTerms ? () {} : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Pallete.actionButton,
+                      // ignore: deprecated_member_use
                       disabledBackgroundColor: Pallete.actionButton.withOpacity(
                         0.4,
                       ),
@@ -152,6 +154,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
+                
+                SocialButton(
+                  iconName: 'f_logo',
+                  iconColor: Pallete.facebookLogo,
+                  label: 'Entrar com Facebook',
+                  textColor: Pallete.textColor,
+                  onPressed: () {},
+                ),
+                const SizedBox(height: 16),
+
+                SocialButton(
+                  iconName: 'g_logo',
+                  label: 'Entrar com Google',
+                  iconColor: Pallete.googleLogo,
+                  textColor: Pallete.textColor,
+                  horizontalPadding: 80.0,
+                  onPressed: () {},
+                ),
+                const SizedBox(height: 36),
+
+                const Text(
+                  'versão do aplicativo: 1.0.0',
+                  style: TextStyle(fontSize: 12, color: Pallete.textColor),
+                ),
+                const SizedBox(height: 24),
               ],
             ),
           ),
