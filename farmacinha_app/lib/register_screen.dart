@@ -1,3 +1,4 @@
+import 'package:farmacia_app/widgets/login_field.dart';
 import 'package:flutter/material.dart';
 import 'package:farmacia_app/pallete.dart';
 
@@ -40,6 +41,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
 
                 SizedBox(height: 36),
+                LoginField(hintText: 'Nome completo'),
+                SizedBox(height: 16),
+
+                LoginField(hintText: 'E-mail'),
+                SizedBox(height: 16),
               ],
             ),
           ),
