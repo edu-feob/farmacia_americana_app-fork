@@ -131,6 +131,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 28),
+                const Row(
+                  children: [
+                    Expanded(
+                      child: Divider(color: Pallete.borderColor, thickness: 1),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(
+                        'ou',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color.fromARGB(126, 36, 36, 36),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(color: Pallete.borderColor, thickness: 1),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
