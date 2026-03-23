@@ -23,7 +23,23 @@ class WelcomeScreen extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
 
-                const SizedBox(), // placeholder
+                const Column(
+                  children: [
+                    Text(
+                      'Seja Bem Vindo(a)!',
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1A1A1A),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Acesse sua conta ou crie sua conta',
+                      style: TextStyle(fontSize: 14, color: Pallete.textColor),
+                    ),
+                  ],
+                ), 
                 const SizedBox(), // placeholder
               ],
             ),
