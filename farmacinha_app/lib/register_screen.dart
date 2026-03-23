@@ -12,6 +12,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
+  bool _acceptedTerms = false;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       setState(() => _obscureConfirm = !_obscureConfirm),
                 ),
                 const SizedBox(height: 16),
+
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 36,
+                      width: 36,
+                      child: Checkbox(
+                        side: const BorderSide(color: Pallete.borderColor),
+                        value: _acceptedTerms,
+                        activeColor: Pallete.actionButton,
+                        onChanged: (value) =>
+                            setState(() => _acceptedTerms = value!),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Pallete.textColor,
+                        ),
+                        children: [
+                          TextSpan(text: 'Concordo com os '),
+                          TextSpan(
+                            text: 'termos de uso',
+                            style: TextStyle(
+                              color: Pallete.actionButton,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 28),
               ],
             ),
           ),
@@ -94,16 +131,17 @@ class _PasswordField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(color: Pallete.textColor, fontSize: 15),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 16,
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Pallete.borderColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide:
-              const BorderSide(color: Pallete.actionButton, width: 1.5),
+          borderSide: const BorderSide(color: Pallete.actionButton, width: 1.5),
         ),
         suffixIcon: IconButton(
           icon: Icon(
