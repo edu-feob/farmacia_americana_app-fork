@@ -6,10 +6,29 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Pallete.backgroundColor,
       body: SafeArea(
-        child: SizedBox.expand(),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(height: 60),
+
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 260,
+                  fit: BoxFit.contain,
+                ),
+
+                const SizedBox(), // placeholder
+                const SizedBox(), // placeholder
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
