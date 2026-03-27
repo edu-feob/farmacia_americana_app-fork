@@ -154,7 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                
+
                 SocialButton(
                   iconName: 'f_logo',
                   iconColor: Pallete.facebookLogo,
@@ -201,33 +201,31 @@ class _PasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: obscureText,
-      style: const TextStyle(color: Color(0xFF1A1A1A)),
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: const TextStyle(color: Pallete.textColor, fontSize: 15),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 16,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Pallete.borderColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Pallete.actionButton, width: 1.5),
-        ),
-        suffixIcon: IconButton(
-          icon: Icon(
-            obscureText
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined,
-            color: Pallete.textColor,
-            size: 20,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 330),
+      child: TextFormField(
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(20),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Pallete.borderColor, width: 3),
+            borderRadius: BorderRadius.circular(10),
           ),
-          onPressed: onToggle,
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Pallete.actionButton, width: 3),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          hintText: hintText,
+          suffixIcon: IconButton(
+            icon: Icon(
+              obscureText
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              color: Pallete.textColor,
+              size: 20,
+            ),
+            onPressed: onToggle,
+          ),
         ),
       ),
     );
