@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false; // Estado para a caixinha de Salvar Login
+  bool _obscurePassword = true; // Estado do icone de ocultar senha
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +25,63 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 140),
               const Text(
                 'Login',
-                style: TextStyle(fontSize: 50, color: Color.fromARGB(255, 233, 206, 120), fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 50,
+                  color: Color.fromARGB(255, 233, 206, 120),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 50),
-              
-              // Email e Senha 
+
+              // Email e Senha
               const LoginField(hintText: 'Email'),
               const SizedBox(height: 16),
-              const LoginField(hintText: 'Senha'),
-              
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 330),
+                child: TextFormField(
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(20),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Pallete.borderColor,
+                        width: 3,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Pallete.actionButton,
+                        width: 3,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintText: 'Senha',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: Pallete.textColor,
+                        size: 20,
+                      ),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
+                    ),
+                  ),
+                ),
+              ),
+
               // Caixinha "Salvar Login"
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 35), 
+                padding: const EdgeInsets.symmetric(horizontal: 35),
                 child: Row(
                   children: [
                     SizedBox(
                       height: 40,
                       width: 36,
                       child: Checkbox(
-                        side: const BorderSide(color:Pallete.borderColor),
+                        side: const BorderSide(color: Pallete.borderColor),
                         value: isRememberMe,
                         activeColor: const Color.fromARGB(255, 233, 206, 120),
                         onChanged: (value) {
@@ -60,15 +99,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 30),
               const GradientButton(),
-              
+
               const SizedBox(height: 52),
-              const Text('ou', style: TextStyle(fontSize: 17, color: Color.fromARGB(126, 36, 36, 36)),),
+              const Text(
+                'ou',
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Color.fromARGB(126, 36, 36, 36),
+                ),
+              ),
               const SizedBox(height: 20),
-              
-              // Opções Sociais 
+
+              // Opções Sociais
               SocialButton(
                 iconName: 'g_logo',
                 label: 'Entrar com Google',
