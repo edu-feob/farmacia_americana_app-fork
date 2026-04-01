@@ -104,29 +104,7 @@
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Iniciar Venda;
-:Identificar Cliente (UC02);
-repeat
-  :Pesquisar Produto;
-  :Verificar Estoque (UC03);
-  if (Possui Saldo?) then (Sim)
-    :Adicionar ao Carrinho;
-  else (Não)
-    :Bloquear Item (RN07);
-  endif
-repeat while (Mais itens?) is (Sim)
-if (Possui Controlado?) then (Sim)
-  :Validar Receita (UC05);
-endif
-:Processar Pagamento (UC08);
-:Persistir Dados de Auditoria (UC06);
-:Emitir Comprovante;
-stop
-@enduml
-```
+<img width="350" height="834" alt="image" src="https://github.com/user-attachments/assets/622da48d-a451-4522-a852-6a47fd799568" />
 
 ---
 
@@ -166,22 +144,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Solicitar CPF;
-:Validar formato do CPF;
-if (CPF encontrado no BD?) then (Sim)
-  :Exibir dados do cliente;
-  :Vincular ao Pedido;
-else (Não)
-  :Abrir formulário de cadastro;
-  :Inserir Nome, E-mail e Tel;
-  :Salvar novo Cliente;
-endif
-stop
-@enduml
-```
+<img width="358" height="422" alt="image" src="https://github.com/user-attachments/assets/574148f2-d573-4bdc-8f3d-b88cfeb56caa" />
 
 ---
 
@@ -220,25 +183,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Receber ID do Produto;
-:Consultar Tabela de Estoque;
-if (Quantidade > 0?) then (Sim)
-  :Exibir saldo disponível;
-  if (Qtd solicitada <= Saldo?) then (Sim)
-    :Reservar itens;
-  else (Não)
-    :Ajustar para saldo máximo;
-  endif
-else (Não)
-  :Exibir "Sem Estoque";
-  :Bloquear Inclusão;
-endif
-stop
-@enduml
-```
+<img width="481" height="431" alt="image" src="https://github.com/user-attachments/assets/509daaca-90d3-4ea5-b679-1a8a4e4a495b" />
 
 ---
 
@@ -277,27 +222,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Gatilho: Falha da IA (2x) ou Solicitação do Cliente;
-:Mover para fila de Atendimento Humano;
-:Notificar Atendentes disponíveis;
-if (Atendente aceita?) then (Sim)
-  :Carregar Histórico completo (Contexto);
-  :Liberar chat manual para Atendente;
-else (Timeout / Recusa)
-  :Redistribuir para próximo Atendente;
-  if (Há outro Atendente?) then (Sim)
-    :Notificar novo Atendente;
-  else (Não)
-    :Manter cliente em fila de espera;
-    :IA mantém funções básicas ativas;
-  endif
-endif
-stop
-@enduml
-```
+<img width="594" height="483" alt="image" src="https://github.com/user-attachments/assets/2a0e5a4c-8bef-49cd-8508-48244de571fd" />
 
 ---
 
@@ -340,32 +265,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Sistema detecta item controlado no carrinho;
-:Solicitar foto da receita ao Cliente;
-:Cliente envia imagem via chat;
-:IA realiza pré-leitura OCR (RN03);
-if (Confiança OCR >= 85%?) then (Sim)
-  :Pré-preencher dados do médico;
-else (Não)
-  :Sinalizar campos p/ preenchimento manual;
-endif
-:Notificar Farmacêutico;
-:Farmacêutico analisa Imagem vs Dados;
-if (Receita Válida?) then (Sim)
-  :Farmacêutico clica em Aprovar;
-  :Registrar CRM do Farmacêutico (RN06);
-  :Liberar Checkout (RN04);
-else (Não)
-  :Inserir nota obrigatória de explicação;
-  :Enviar nota ao Cliente via chat (RF13);
-  :Bloquear item no carrinho;
-endif
-stop
-@enduml
-```
+<img width="521" height="761" alt="image" src="https://github.com/user-attachments/assets/a3d712c9-0dee-433f-a21a-6ae72bcaa7ab" />
 
 ---
 
@@ -411,39 +311,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-skinparam Monochrome true
-start
-:Gatilho: Finalização de Fluxo (UC01/UC05);
-
-partition "Coleta de Dados (RN05/RN06)" {
-  :Capturar CPF e Itens do Carrinho;
-  :Exportar Log do Chat (JSON/PDF);
-  :Recuperar Imagem da Receita (Blob);
-  :Capturar CRMs e carimbos de tempo;
-}
-
-:Criptografar Dados Sensíveis (AES-256);
-:Enviar Payload para API de Auditoria;
-
-if (API retornou Status 201?) then (Sim)
-  :Gerar Protocolo Único de Auditoria;
-  :Vincular Protocolo ao ID da Venda;
-  :Limpar Cache de Transmissão;
-else (Não / Timeout)
-  :Armazenar em Fila de Contingência;
-  :Notificar Serviço de Monitoramento;
-  repeat
-    :Aguardar 5 minutos;
-    :Reenviar Payload;
-  repeat while (Sucesso?) is (Não)
-endif
-
-:Encerrar Processo de Persistência;
-stop
-@enduml
-```
+<img width="467" height="954" alt="image" src="https://github.com/user-attachments/assets/7f0842f2-6ccb-4c31-9492-19c42a838106" />
 
 ---
 
@@ -483,26 +351,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Acessar Painel Gerencial;
-:Selecionar Produto ou Configuração;
-:Informar novo valor;
-if (Permissão OK? (RN11)) then (Sim)
-  :Validar regras do campo;
-  if (Valor válido?) then (Sim)
-    :Salvar no Banco de Dados;
-    :Propagar p/ App em até 30s (RNF04);
-  else (Não)
-    :Exibir erro de validação;
-  endif
-else (Não)
-  :Exibir erro de permissão;
-endif
-stop
-@enduml
-```
+<img width="594" height="538" alt="image" src="https://github.com/user-attachments/assets/a05641b8-ae4d-40ca-8916-e6976706c0df" />
 
 ---
 
@@ -545,31 +394,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Selecionar Método de Pagamento;
-if (Método == PIX?) then (Sim)
-  :Gerar Chave Dinâmica (10 min);
-  :Monitorar Webhook do Banco;
-  if (Pagamento Confirmado?) then (Sim)
-    :Atualizar Status: "Em Separação";
-  else (Expirado/Falha)
-    :Cancelar Pedido (RN08);
-    :Liberar Estoque reservado;
-    stop
-  endif
-else (Presencial)
-  :Gerar Pedido "Aguardando Entrega";
-  :Atendente realiza entrega física;
-  :Realizar Baixa Manual no App (RN09);
-endif
-:Emitir Recibo de Pagamento;
-:Persistir Dados de Auditoria (UC06);
-:Encerrar Ciclo Financeiro;
-stop
-@enduml
-```
+<img width="594" height="598" alt="image" src="https://github.com/user-attachments/assets/02d598be-e7d1-43f5-8941-c169b6c4805d" />
 
 ---
 
@@ -615,25 +440,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Acessar Dashboard de Gestão;
-:Aplicar filtro de escopo por hierarquia (RN11);
-:Selecionar Período e Unidade;
-:Sistema Consolida Dados de Vendas (UC06);
-:Exibir Gráficos de Performance (BI);
-if (Solicitar Exportação de Auditoria?) then (Sim)
-  if (Perfil >= Gerente?) then (Sim)
-    :Recuperar Logs de Chat e Receitas (RN05);
-    :Gerar Arquivo de Conformidade;
-  else (Não)
-    :Exibir erro de permissão (RN11);
-  endif
-endif
-stop
-@enduml
-```
+<img width="529" height="640" alt="image" src="https://github.com/user-attachments/assets/29bb7dfd-1adc-4a89-b55f-6592b40efac1" />
 
 ---
 
@@ -679,35 +486,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Exibir Tela de Splash;
-:Verificar token JWT em cache;
-if (Token válido?) then (Sim)
-  :Redirecionar para tela inicial do perfil;
-  stop
-else (Não / Expirado)
-  :Exibir Tela de Login;
-  :Usuário informa CPF/Email e Senha;
-  :Enviar credenciais via HTTPS/TLS (RNF05);
-  if (Credenciais válidas?) then (Sim)
-    :Emitir token JWT (24h Cliente / 8h Colaborador);
-    :Armazenar token seguro no dispositivo;
-    :Redirecionar para tela do perfil;
-  else (Não)
-    :Incrementar contador de tentativas;
-    if (>= 5 tentativas?) then (Sim)
-      :Bloquear acesso temporariamente;
-      :Notificar Administrador;
-    else (Não)
-      :Exibir mensagem de erro;
-    endif
-  endif
-endif
-stop
-@enduml
-```
+<img width="594" height="434" alt="image" src="https://github.com/user-attachments/assets/dd1f694a-602a-467b-913f-e6ad4cfd8922" />
 
 ---
 
@@ -755,29 +534,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Acessar tela de Perfil / Conta;
-:Sistema exibe dados cadastrais atuais;
-if (Ação do Usuário?) then (Alterar Dados)
-  :Informar novo valor;
-  :Validar formato e unicidade;
-  if (Dados válidos?) then (Sim)
-    :Persistir alteração (criptografado);
-    :Exibir confirmação;
-  else (Não)
-    :Exibir erro de validação;
-  endif
-else (Ver Histórico - Cliente)
-  :Listar pedidos anteriores;
-  if (Selecionar pedido?) then (Sim)
-    :Exibir detalhes e comprovante;
-  endif
-endif
-stop
-@enduml
-```
+<img width="594" height="514" alt="image" src="https://github.com/user-attachments/assets/9aaea34f-c7ff-4a47-b971-d616032510b4" />
 
 ---
 
@@ -821,32 +578,8 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Pagamento Confirmado (UC08);
-:Atualizar status: "Pagamento Aprovado";
-:Disparar Notificação Push ao Cliente (RN13);
+<img width="508" height="808" alt="image" src="https://github.com/user-attachments/assets/c724e209-9ac7-4871-899b-de86af00c8f4" />
 
-:Atendente separa os produtos;
-:Atualizar status: "Em Separação";
-:Disparar Notificação Push ao Cliente;
-
-:Atendente sai para entrega;
-:Atualizar status: "Saiu para Entrega";
-:Disparar Notificação Push ao Cliente;
-
-if (Entrega realizada com sucesso?) then (Sim)
-  :Atendente confirma entrega no App;
-  :Atualizar status: "Entregue";
-  :Disparar Notificação Push ao Cliente;
-else (Não)
-  :Registrar tentativa sem sucesso;
-  :Notificar Cliente e agendar nova tentativa;
-endif
-stop
-@enduml
-```
 
 ---
 
@@ -891,25 +624,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Acessar módulo "Configurações da IA";
-:Exibir parâmetros atuais por categoria;
-:Administrador seleciona parâmetro;
-:Informar novo valor;
-if (Valor dentro do limite?) then (Sim)
-  :Persistir nova configuração;
-  :Aplicar ao módulo de IA (RNF16);
-  :Registrar log de alteração (RN02);
-  :Exibir confirmação;
-else (Não)
-  :Exibir faixa de valores válidos;
-  :Solicitar nova entrada;
-endif
-stop
-@enduml
-```
+<img width="427" height="587" alt="image" src="https://github.com/user-attachments/assets/154aa6d2-989c-4003-9cb6-1a356d5a1c00" />
 
 ---
 
@@ -954,30 +669,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Acessar módulo "Controle de Acessos";
-:Listar colaboradores (nome, perfil, status);
-if (Ação?) then (Criar novo)
-  :Preencher dados do novo colaborador;
-  :Atribuir perfil de acesso;
-  :Gerar credenciais iniciais;
-else (Editar existente)
-  :Selecionar colaborador;
-  if (Auto-edição?) then (Sim)
-    :Bloquear operação;
-    stop
-  else (Não)
-    :Alterar perfil ou status;
-    :Invalidar token JWT atual do colaborador;
-  endif
-endif
-:Persistir configuração de acesso (RN11);
-:Exibir confirmação;
-stop
-@enduml
-```
+<img width="594" height="519" alt="image" src="https://github.com/user-attachments/assets/fe6cb68f-303d-4871-88e2-d4affa700f2c" />
 
 ---
 
@@ -1017,32 +709,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Exibir Catálogo com categorias;
-if (Ação do Cliente?) then (Busca por texto)
-  :Inserir termo de busca;
-  :Filtrar por nome ou fabricante;
-else (Navegar por categoria)
-  :Selecionar categoria;
-  :Listar produtos da categoria;
-endif
-:Cliente seleciona um produto;
-:Exibir tela de detalhe do produto;
-if (Produto disponível?) then (Sim)
-  if (Cliente clica em "Comprar via Chat"?) then (Sim)
-    :Iniciar UC01 — Realizar Venda;
-  else (Não)
-    :Retornar ao Catálogo;
-  endif
-else (Indisponível)
-  :Exibir aviso "Produto Indisponível";
-  :Ocultar botão de compra;
-endif
-stop
-@enduml
-```
+<img width="594" height="569" alt="image" src="https://github.com/user-attachments/assets/61ce0412-d902-49ff-9860-c65b698e8a8a" />
 
 ---
 
@@ -1087,30 +754,7 @@ stop
 
 ### Diagrama de Atividades
 
-```
-@startuml
-start
-:Sistema detecta evento de mudança de status;
-:Disparar Notificação Push (FCM/APNs);
-if (Permissão Push concedida?) then (Sim)
-  :Exibir notificação no dispositivo;
-  if (Cliente toca na notificação?) then (Sim)
-    if (App aberto?) then (Sim)
-      :Redirecionar para tela do evento;
-    else (Não)
-      :Inicializar App (UC10);
-      :Após autenticação, redirecionar;
-    endif
-  else (Ignorada)
-    :Notificação permanece na barra;
-  endif
-else (Negada)
-  :Registrar preferência;
-  :Disponibilizar evento na tela interna de notificações;
-endif
-stop
-@enduml
-```
+<img width="594" height="330" alt="image" src="https://github.com/user-attachments/assets/dc539536-8fbf-4bba-b8b0-fa6ca8fe39be" />
 
 ---
 
