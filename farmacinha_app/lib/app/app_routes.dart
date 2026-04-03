@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:farmacia_app/features/splash/splash_screen.dart';
+import 'package:farmacia_app/features/splash/view/splash_screen.dart';
 import 'package:farmacia_app/features/auth/views/welcome_screen.dart';
 import 'package:farmacia_app/features/auth/views/login_screen.dart';
 import 'package:farmacia_app/features/auth/views/register_screen.dart';
