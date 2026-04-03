@@ -12,7 +12,7 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> get routes => {
         splash: (_) => const SplashScreen(),
-        welcome: (_) => const WelcomeScreen(),
+        welcome: (_) => WelcomeScreen(),
         login: (_) => const LoginScreen(),
         register: (_) => const RegisterScreen(),
       };
