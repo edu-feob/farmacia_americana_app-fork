@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:farmacia_app/widgets/gradient_button.dart';
-import 'package:farmacia_app/widgets/social.button.dart';
-import 'package:farmacia_app/widgets/login_field.dart';
-import 'package:farmacia_app/pallete.dart';
+import 'package:farmacia_app/core/widgets/gradient_button.dart';
+import 'package:farmacia_app/core/widgets/social.button.dart';
+import 'package:farmacia_app/core/widgets/login_field.dart';
+import 'package:farmacia_app/core/palette/pallete.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

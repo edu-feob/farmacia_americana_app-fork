@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pallete.dart';
+import '../palette/pallete.dart';
 
 class LoginField extends StatelessWidget {
   final String hintText;

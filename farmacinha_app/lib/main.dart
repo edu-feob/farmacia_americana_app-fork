@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:farmacia_app/pallete.dart';
-import 'package:farmacia_app/app_routes.dart';
+import 'package:farmacia_app/core/palette/pallete.dart';
+import 'package:farmacia_app/app/app_routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

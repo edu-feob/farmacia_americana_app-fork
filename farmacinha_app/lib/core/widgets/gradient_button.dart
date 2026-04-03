@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../pallete.dart';
+import '../palette/pallete.dart';
 
 class GradientButton extends StatelessWidget {
   const GradientButton({super.key});
