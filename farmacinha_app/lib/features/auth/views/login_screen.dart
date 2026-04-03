@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:farmacia_app/core/widgets/gradient_button.dart';
-import 'package:farmacia_app/core/widgets/social.button.dart';
+import 'package:farmacia_app/core/widgets/social_button.dart';
 import 'package:farmacia_app/core/widgets/login_field.dart';
 import 'package:farmacia_app/core/widgets/password_field.dart';
 import 'package:farmacia_app/core/palette/pallete.dart';
