@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:farmacia_app/pallete.dart';
-import 'package:farmacia_app/app_routes.dart';
+import 'package:farmacia_app/core/palette/pallete.dart';
+import 'package:farmacia_app/app/app_routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,9 +15,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Drogaria Americana Saúde',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light().copyWith(
+      theme: ThemeData(
+        useMaterial3: true,
         scaffoldBackgroundColor: Pallete.backgroundColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFE31E24)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFE31E24),
+          brightness: Brightness.light,
+        ),
       ),
       initialRoute: AppRoutes.splash,
       routes: AppRoutes.routes,
