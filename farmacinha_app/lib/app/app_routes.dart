@@ -4,12 +4,14 @@ import 'package:farmacia_app/features/splash/view/splash_screen.dart';
 import 'package:farmacia_app/features/auth/views/welcome_screen.dart';
 import 'package:farmacia_app/features/auth/views/login_screen.dart';
 import 'package:farmacia_app/features/auth/views/register_screen.dart';
+import 'package:farmacia_app/features/client/catalog/view/catalog_screen.dart';
 
 class AppRoutes {
   static const String splash = '/';
   static const String welcome = '/welcome';
   static const String login = '/login';
   static const String register = '/register';
+  static const String catalog = '/catalog';
 
   static Map<String, WidgetBuilder> get routes => {
         // Removi o 'const' de todos para evitar o erro de "not a const constructor"
@@ -17,5 +19,6 @@ class AppRoutes {
         welcome: (_) => WelcomeScreen(), 
         login: (_) => LoginScreen(),     
         register: (_) => RegisterScreen(), 
+        catalog: (_) => CatalogScreen(),
       };
 }
