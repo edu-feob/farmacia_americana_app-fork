@@ -4,61 +4,79 @@ import 'package:farmacia_app/features/auth/data/mocks/mock_users.dart';
 import 'package:farmacia_app/features/auth/data/models/user_model.dart';
 
 class LoginViewModel extends ChangeNotifier {
+  // Controles dos campos de texto
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   bool _isRememberMe = false;
   bool _obscurePassword = true;
 
+  // Getters
   bool get isRememberMe => _isRememberMe;
   bool get obscurePassword => _obscurePassword;
 
+  // Alternar "Salvar Login"
   void toggleRememberMe(bool? value) {
     _isRememberMe = value ?? false;
     notifyListeners();
   }
 
+  // Alternar visibilidade da senha
   void togglePasswordVisibility() {
     _obscurePassword = !_obscurePassword;
     notifyListeners();
   }
 
+  /// Método principal de Login
   Future<void> login(BuildContext context) async {
-    final email = emailController.text.trim();
-    final password = passwordController.text.trim();
+    // Pegamos os textos, removemos espaços (trim) e padronizamos o email para minúsculo
+    final emailInput = emailController.text.trim().toLowerCase();
+    final passwordInput = passwordController.text.trim();
 
-    debugPrint("Tentativa de login - Usuário: $email");
+    // LOG DE DEBUG: Verifique se esses valores aparecem no seu console ao clicar no botão
+    debugPrint("--- TENTATIVA DE LOGIN ---");
+    debugPrint("Email digitado: '$emailInput'");
+    debugPrint("Senha digitada: '$passwordInput'");
 
     try {
-      // Busca o usuário no Mock seguindo as credenciais
-      final user = MockUsers.getUsers().firstWhere(
-        (u) => u.email.toLowerCase() == email.toLowerCase() && u.password == password,
+      // Buscamos a lista de usuários mockados
+      final users = MockUsers.getUsers();
+
+      // Tentamos encontrar o usuário que coincida com Email E Senha
+      final user = users.firstWhere(
+        (u) => u.email.toLowerCase() == emailInput && u.password == passwordInput,
       );
 
-      // Redirecionamento baseado no Role
-      // Apenas o cliente vai para a HomeClient por enquanto
+      debugPrint("Usuário encontrado: ${user.name} | Role: ${user.role}");
+
+      // Lógica de Redirecionamento baseada no Role
       if (user.role == UserRole.cliente) {
+        // pushReplacementNamed remove a tela de login da pilha (impede voltar)
         Navigator.pushReplacementNamed(context, AppRoutes.homeClient);
       } else {
-        // Para os outros cargos, podemos exibir um alerta ou log enquanto as telas não existem
-        debugPrint("Usuário ${user.name} logado como ${user.role}. Tela em desenvolvimento.");
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Acesso para ${user.role.name} ainda em desenvolvimento!"),
-            backgroundColor: Colors.orange,
-          ),
+        // Caso seja Atendente, Farmacêutico ou Dono (Telas ainda não criadas)
+        _showErrorSnackBar(
+          context, 
+          "Acesso para ${user.role.name.toUpperCase()} em desenvolvimento!",
+          isWarning: true,
         );
       }
     } catch (e) {
-      // Se o firstWhere não encontrar ninguém, ele lança um erro
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("E-mail ou senha inválidos!"),
-          backgroundColor: Colors.redAccent,
-        ),
-      );
+      // Se o firstWhere não encontrar ninguém, ele cai aqui
+      debugPrint("ERRO: Usuário não encontrado ou credenciais incorretas.");
+      _showErrorSnackBar(context, "E-mail ou senha inválidos!");
     }
+  }
+
+  // Helper para mostrar mensagens de erro/aviso
+  void _showErrorSnackBar(BuildContext context, String message, {bool isWarning = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isWarning ? Colors.orange : Colors.redAccent,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
   }
 
   @override
