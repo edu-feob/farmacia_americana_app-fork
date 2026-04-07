@@ -5,7 +5,7 @@ import 'package:farmacia_app/features/auth/views/welcome_screen.dart';
 import 'package:farmacia_app/features/auth/views/login_screen.dart';
 import 'package:farmacia_app/features/auth/views/register_screen.dart';
 import 'package:farmacia_app/features/client/home_client/view/home_client_screen.dart';
-import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_screen.dart';
+import 'package:farmacia_app/features/attendant/home_attendant/view/home_attendant_screen.dart';
 
 class AppRoutes {
   static const String splash = '/';

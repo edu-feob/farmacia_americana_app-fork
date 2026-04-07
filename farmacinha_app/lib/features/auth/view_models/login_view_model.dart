@@ -29,49 +29,61 @@ class LoginViewModel extends ChangeNotifier {
 
   /// Método principal de Login
   Future<void> login(BuildContext context) async {
-    // Pegamos os textos, removemos espaços (trim) e padronizamos o email para minúsculo
     final emailInput = emailController.text.trim().toLowerCase();
     final passwordInput = passwordController.text.trim();
 
-    // LOG DE DEBUG: Verifique se esses valores aparecem no seu console ao clicar no botão
-    debugPrint("--- TENTATIVA DE LOGIN ---");
+    debugPrint('--- TENTATIVA DE LOGIN ---');
     debugPrint("Email digitado: '$emailInput'");
     debugPrint("Senha digitada: '$passwordInput'");
 
+    final users = MockUsers.getUsers();
+    User? authenticatedUser;
+
+    for (final user in users) {
+      if (user.email.toLowerCase() == emailInput && user.password == passwordInput) {
+        authenticatedUser = user;
+        break;
+      }
+    }
+
+    if (authenticatedUser == null) {
+      debugPrint('ERRO: Usuário não encontrado ou credenciais incorretas.');
+      _showErrorSnackBar(context, 'E-mail ou senha inválidos!');
+      return;
+    }
+
+    debugPrint(
+      'Usuário encontrado: ${authenticatedUser.name} | Role: ${authenticatedUser.role}',
+    );
+
     try {
-      // Buscamos a lista de usuários mockados
-      final users = MockUsers.getUsers();
-
-      // Tentamos encontrar o usuário que coincida com Email E Senha
-      final user = users.firstWhere(
-        (u) => u.email.toLowerCase() == emailInput && u.password == passwordInput,
-      );
-
-      debugPrint("Usuário encontrado: ${user.name} | Role: ${user.role}");
-
-      // Lógica de Redirecionamento baseada no Role
-      if (user.role == UserRole.cliente) {
-        // pushReplacementNamed remove a tela de login da pilha (impede voltar)
+      if (authenticatedUser.role == UserRole.cliente) {
         Navigator.pushReplacementNamed(context, AppRoutes.homeClient);
-      }else if (user.role == UserRole.atendente) {
+      } else if (authenticatedUser.role == UserRole.atendente) {
         Navigator.pushReplacementNamed(context, AppRoutes.homeAttendant);
-        } else {
-        // Caso seja Farmacêutico ou Dono (Telas ainda não criadas)
+      } else {
         _showErrorSnackBar(
-          context, 
-          "Acesso para ${user.role.name.toUpperCase()} em desenvolvimento!",
+          context,
+          'Acesso para ${authenticatedUser.role.name.toUpperCase()} em desenvolvimento!',
           isWarning: true,
         );
       }
-    } catch (e) {
-      // Se o firstWhere não encontrar ninguém, ele cai aqui
-      debugPrint("ERRO: Usuário não encontrado ou credenciais incorretas.");
-      _showErrorSnackBar(context, "E-mail ou senha inválidos!");
+    } catch (e, s) {
+      debugPrint('ERRO DE NAVEGAÇÃO: $e');
+      debugPrint('$s');
+      _showErrorSnackBar(
+        context,
+        'Falha ao abrir a tela do perfil ${authenticatedUser.role.name}.',
+      );
     }
   }
 
   // Helper para mostrar mensagens de erro/aviso
-  void _showErrorSnackBar(BuildContext context, String message, {bool isWarning = false}) {
+  void _showErrorSnackBar(
+    BuildContext context,
+    String message, {
+    bool isWarning = false,
+  }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
