@@ -53,8 +53,10 @@ class LoginViewModel extends ChangeNotifier {
       if (user.role == UserRole.cliente) {
         // pushReplacementNamed remove a tela de login da pilha (impede voltar)
         Navigator.pushReplacementNamed(context, AppRoutes.homeClient);
-      } else {
-        // Caso seja Atendente, Farmacêutico ou Dono (Telas ainda não criadas)
+      }else if (user.role == UserRole.atendente) {
+        Navigator.pushReplacementNamed(context, AppRoutes.homeAttendant);
+        } else {
+        // Caso seja Farmacêutico ou Dono (Telas ainda não criadas)
         _showErrorSnackBar(
           context, 
           "Acesso para ${user.role.name.toUpperCase()} em desenvolvimento!",
