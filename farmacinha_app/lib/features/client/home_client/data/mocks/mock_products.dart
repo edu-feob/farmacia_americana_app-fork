@@ -1,4 +1,4 @@
-import 'package:farmacia_app/features/client/home_client/data/product_model.dart';
+import 'package:farmacia_app/features/client/home_client/data/models/product_model.dart';
 
 class MockProducts {
   static List<Product> getProducts() {

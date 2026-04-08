@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:farmacia_app/features/client/home_client/data/mock_products.dart';
-import 'package:farmacia_app/features/client/home_client/data/mock_categories.dart';
-import 'package:farmacia_app/features/client/home_client/data/banner_model.dart';
-import 'package:farmacia_app/features/client/home_client/data/mock_banners.dart';
-import 'package:farmacia_app/features/client/home_client/data/product_model.dart';
-import 'package:farmacia_app/features/client/home_client/data/category_model.dart';
+import 'package:farmacia_app/features/client/home_client/data/mocks/mock_products.dart';
+import 'package:farmacia_app/features/client/home_client/data/mocks/mock_categories.dart';
+import 'package:farmacia_app/features/client/home_client/data/models/banner_model.dart';
+import 'package:farmacia_app/features/client/home_client/data/mocks/mock_banners.dart';
+import 'package:farmacia_app/features/client/home_client/data/models/product_model.dart';
+import 'package:farmacia_app/features/client/home_client/data/models/category_model.dart';
 
 class HomeClientViewModel extends ChangeNotifier {
   // ===== DADOS PRIVADOS =====

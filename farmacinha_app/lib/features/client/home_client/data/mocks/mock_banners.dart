@@ -1,4 +1,4 @@
-import 'package:farmacia_app/features/client/home_client/data/banner_model.dart';
+import 'package:farmacia_app/features/client/home_client/data/models/banner_model.dart';
 
 class MockBanners {
   static List<BannerModel> getBanners() {
