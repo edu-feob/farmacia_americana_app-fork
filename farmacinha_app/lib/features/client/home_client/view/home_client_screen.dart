@@ -7,6 +7,10 @@ import 'package:farmacia_app/features/client/home_client/view/widgets/custom_bot
 import 'package:farmacia_app/features/client/home_client/view/widgets/banner_carousel.dart';
 import 'package:farmacia_app/features/client/home_client/view/widgets/category_grid.dart';
 
+// ── Suas telas ────────────────────────────────────────────────────────────────
+import 'package:farmacia_app/features/client/account/view/account_screen.dart';
+import 'package:farmacia_app/features/client/notifications/view/notifications_screen.dart';
+
 class HomeClientScreen extends StatefulWidget {
   const HomeClientScreen({super.key});
 
@@ -24,13 +28,49 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
     super.dispose();
   }
 
+  // Navega para a tela correspondente ao tab selecionado
+  void _onTabTapped(int index) {
+    switch (index) {
+      case 0:
+        // Home — permanece na mesma tela
+        setState(() => _currentTabIndex = 0);
+        break;
+      case 1:
+        // Buscar — placeholder
+        setState(() => _currentTabIndex = 1);
+        debugPrint('Abrir Buscar');
+        break;
+      case 2:
+        // Chat — placeholder
+        setState(() => _currentTabIndex = 2);
+        debugPrint('Abrir Chat');
+        break;
+      case 3:
+        // Carrinho — placeholder
+        setState(() => _currentTabIndex = 3);
+        debugPrint('Abrir Carrinho');
+        break;
+      case 4:
+        // Conta — sua tela
+        setState(() => _currentTabIndex = 4);
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const AccountScreen()),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Pallete.backgroundColor,
       appBar: CustomAppBar(
         onMenuTap: () => debugPrint('Abrir Drawer'),
-        onNotificationTap: () => debugPrint('Abrir Notificações'),
+        onNotificationTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+          );
+        },
         onLogoTap: () => debugPrint('Logo clicada'),
       ),
       body: ListenableBuilder(
@@ -55,11 +95,8 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
               children: [
                 _buildSearchBar(),
                 BannerCarousel(
-                  banners: viewModel
-                      .banners, 
-                  onTap: (id) {
-                    debugPrint('Banner $id clicado');
-                  },
+                  banners: viewModel.banners,
+                  onTap: (id) => debugPrint('Banner $id clicado'),
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -99,9 +136,7 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentTabIndex,
-        onTap: (index) {
-          setState(() => _currentTabIndex = index);
-        },
+        onTap: _onTabTapped,
       ),
     );
   }

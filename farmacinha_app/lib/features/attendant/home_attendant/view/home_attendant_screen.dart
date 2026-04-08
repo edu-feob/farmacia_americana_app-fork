@@ -118,7 +118,7 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                     decoration: BoxDecoration(
                       color: const Color(0xFFFEEDEF),
                       borderRadius: BorderRadius.circular(10),
-                      border: Border(left: BorderSide(color: Pallete.primaryRed, width: 4)),
+                      border: const Border(left: BorderSide(color: Pallete.primaryRed, width: 4)),
                     ),
                     child: const Row(
                       children: [

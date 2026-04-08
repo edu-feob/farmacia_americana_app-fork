@@ -1,0 +1,560 @@
+import 'package:flutter/material.dart';
+import 'package:farmacia_app/core/palette/pallete.dart';
+import 'package:farmacia_app/features/client/account/view_model/account_view_model.dart';
+import 'package:farmacia_app/features/client/orders/list/view/orders_screen.dart';
+
+class AccountScreen extends StatefulWidget {
+  const AccountScreen({super.key});
+
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  final AccountViewModel viewModel = AccountViewModel();
+
+  @override
+  void dispose() {
+    viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFF8F7),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFFFF8F7),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded, color: Pallete.primaryRed),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: const Text(
+          'Minha Conta',
+          style: TextStyle(
+            color: Pallete.primaryRed,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings_rounded, color: Pallete.primaryRed),
+            onPressed: () => debugPrint('Abrir configurações'),
+          ),
+        ],
+      ),
+      body: ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, _) {
+          if (viewModel.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+                valueColor: AlwaysStoppedAnimation(Pallete.primaryRed),
+              ),
+            );
+          }
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+            child: Column(
+              children: [
+                _buildProfileHeader(),
+                const SizedBox(height: 20),
+                _buildMenuGrid(),
+                const SizedBox(height: 20),
+                _buildLoyaltyCard(),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  // ─── HEADER DO PERFIL ───────────────────────────────────────────────────────
+
+  Widget _buildProfileHeader() {
+    final user = viewModel.currentUser;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 20,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          // Avatar com botão de editar
+          Stack(
+            children: [
+              Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Pallete.accentYellow,
+                    width: 2.5,
+                  ),
+                ),
+                child: ClipOval(
+                  child: Container(
+                    color: Pallete.grayColor,
+                    child: const Icon(
+                      Icons.person_rounded,
+                      size: 42,
+                      color: Pallete.textColor,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: () => debugPrint('Editar foto'),
+                  child: Container(
+                    width: 26,
+                    height: 26,
+                    decoration: BoxDecoration(
+                      color: Pallete.primaryRed,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: const Icon(
+                      Icons.edit_rounded,
+                      size: 13,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(width: 16),
+
+          // Nome, email e badge
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  user?.name ?? 'Usuário',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF291715),
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  user?.email ?? '',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Pallete.textColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Pallete.accentYellow,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    viewModel.loyaltyTier,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF6E5C00),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── GRID DE MENU ───────────────────────────────────────────────────────────
+
+  Widget _buildMenuGrid() {
+    return Column(
+      children: [
+        // Linha 1
+        Row(
+          children: [
+            Expanded(
+              child: _MenuTile(
+                icon: Icons.shopping_bag_rounded,
+                iconBgColor: Pallete.primaryRed.withOpacity(0.1),
+                iconColor: Pallete.primaryRed,
+                title: 'Meus Pedidos',
+                subtitle: 'Veja seu histórico de compras',
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const OrdersScreen()),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _MenuTile(
+                icon: Icons.badge_rounded,
+                iconBgColor: Pallete.accentYellow.withOpacity(0.2),
+                iconColor: const Color(0xFF705D00),
+                title: 'Dados Pessoais',
+                subtitle: 'Edite suas informações de perfil',
+                onTap: () => debugPrint('Dados Pessoais'),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+
+        // Linha 2
+        Row(
+          children: [
+            Expanded(
+              child: _MenuTile(
+                icon: Icons.favorite_rounded,
+                iconBgColor: const Color(0xFFFFDAD6),
+                iconColor: const Color(0xFFBA1A1A),
+                title: 'Produtos Favoritos',
+                subtitle: 'Sua lista de desejos e recorrentes',
+                onTap: () => debugPrint('Favoritos'),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _MenuTile(
+                icon: Icons.location_on_rounded,
+                iconBgColor: const Color(0xFFCDE5FF).withOpacity(0.5),
+                iconColor: const Color(0xFF005F93),
+                title: 'Endereços',
+                subtitle: 'Gerencie seus locais de entrega',
+                onTap: () => debugPrint('Endereços'),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+
+        // Linha 3
+        Row(
+          children: [
+            Expanded(
+              child: _MenuTile(
+                icon: Icons.credit_card_rounded,
+                iconBgColor: const Color(0xFFFDDBD7),
+                iconColor: const Color(0xFF5D3F3C),
+                title: 'Métodos de Pagamento',
+                subtitle: 'Cartões e formas de pagamento',
+                onTap: () => debugPrint('Pagamento'),
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Botão Sair
+            Expanded(
+              child: _LogoutTile(
+                onTap: () => _showLogoutDialog(),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // ─── CARD DE FIDELIDADE ─────────────────────────────────────────────────────
+
+  Widget _buildLoyaltyCard() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: Pallete.accentYellow,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Clube de Benefícios',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF291715),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Você tem ${viewModel.loyaltyPoints} pontos para trocar\npor descontos em medicamentos e higiene.',
+            style: const TextStyle(
+              fontSize: 13,
+              color: Color(0xFF291715),
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 16),
+          GestureDetector(
+            onTap: () => debugPrint('Ver Benefícios'),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 11),
+              decoration: BoxDecoration(
+                color: const Color(0xFF291715),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: const Text(
+                'Ver Benefícios',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── DIALOG DE LOGOUT ───────────────────────────────────────────────────────
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text(
+          'Sair da conta',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: const Text('Tem certeza que deseja encerrar a sessão?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(color: Pallete.textColor),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              viewModel.logout(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Pallete.primaryRed,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: const Text('Sair'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── WIDGETS AUXILIARES ───────────────────────────────────────────────────────
+
+class _MenuTile extends StatefulWidget {
+  final IconData icon;
+  final Color iconBgColor;
+  final Color iconColor;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  const _MenuTile({
+    required this.icon,
+    required this.iconBgColor,
+    required this.iconColor,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  @override
+  State<_MenuTile> createState() => _MenuTileState();
+}
+
+class _MenuTileState extends State<_MenuTile> {
+  bool _pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _pressed = true),
+      onTapUp: (_) => setState(() => _pressed = false),
+      onTapCancel: () => setState(() => _pressed = false),
+      onTap: widget.onTap,
+      child: AnimatedScale(
+        scale: _pressed ? 0.97 : 1.0,
+        duration: const Duration(milliseconds: 120),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: widget.iconBgColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(widget.icon, color: widget.iconColor, size: 22),
+                  ),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: Pallete.borderColor,
+                    size: 20,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                widget.title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  color: Color(0xFF291715),
+                ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                widget.subtitle,
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: Pallete.textColor,
+                  height: 1.3,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LogoutTile extends StatefulWidget {
+  final VoidCallback onTap;
+  const _LogoutTile({required this.onTap});
+
+  @override
+  State<_LogoutTile> createState() => _LogoutTileState();
+}
+
+class _LogoutTileState extends State<_LogoutTile> {
+  bool _pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _pressed = true),
+      onTapUp: (_) => setState(() => _pressed = false),
+      onTapCancel: () => setState(() => _pressed = false),
+      onTap: widget.onTap,
+      child: AnimatedScale(
+        scale: _pressed ? 0.97 : 1.0,
+        duration: const Duration(milliseconds: 120),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Pallete.primaryRed.withOpacity(0.04),
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(
+              color: Pallete.primaryRed.withOpacity(0.15),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Pallete.primaryRed,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Pallete.primaryRed.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.logout_rounded,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Sair',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  color: Pallete.primaryRed,
+                ),
+              ),
+              const SizedBox(height: 3),
+              const Text(
+                'Encerrar sessão no dispositivo',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: Color(0xFF93000D),
+                  height: 1.3,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
