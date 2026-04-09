@@ -9,6 +9,10 @@ import 'package:farmacia_app/features/client/home_client/view/widgets/category_g
 // IMPORT DA NOVA VIEW DE DETALHES
 import 'package:farmacia_app/features/client/product_detail/view/product_detail_view.dart';
 
+// ── Suas telas ────────────────────────────────────────────────────────────────
+import 'package:farmacia_app/features/client/account/view/account_screen.dart';
+import 'package:farmacia_app/features/client/notifications/view/notifications_screen.dart';
+
 class HomeClientScreen extends StatefulWidget {
   const HomeClientScreen({super.key});
 
@@ -26,11 +30,51 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
     super.dispose();
   }
 
+  // Navega para a tela correspondente ao tab selecionado
+  void _onTabTapped(int index) {
+    switch (index) {
+      case 0:
+        // Home — permanece na mesma tela
+        setState(() => _currentTabIndex = 0);
+        break;
+      case 1:
+        // Buscar — placeholder
+        setState(() => _currentTabIndex = 1);
+        debugPrint('Abrir Buscar');
+        break;
+      case 2:
+        // Chat — placeholder
+        setState(() => _currentTabIndex = 2);
+        debugPrint('Abrir Chat');
+        break;
+      case 3:
+        // Carrinho — placeholder
+        setState(() => _currentTabIndex = 3);
+        debugPrint('Abrir Carrinho');
+        break;
+      case 4:
+        // Conta — sua tela
+        setState(() => _currentTabIndex = 4);
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const AccountScreen()),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Pallete.backgroundColor,
-      appBar: const CustomAppBar(),
+      appBar: CustomAppBar(
+        onMenuTap: () => debugPrint('Abrir Drawer'),
+        onNotificationTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+          );
+        },
+        onLogoTap: () => debugPrint('Logo clicada'),
+      ),
       body: ListenableBuilder(
         listenable: viewModel,
         builder: (context, _) {
@@ -97,9 +141,7 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentTabIndex,
-        onTap: (index) {
-          setState(() => _currentTabIndex = index);
-        },
+        onTap: _onTabTapped,
       ),
     );
   }
@@ -150,7 +192,6 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
             isOnPromotion: product.isOnPromotion,
             discountPercentage: product.discountPercentage,
             onTap: () {
-              // EXECUÇÃO DA NAVEGAÇÃO
               viewModel.viewProductDetail(product);
               Navigator.push(
                 context,
