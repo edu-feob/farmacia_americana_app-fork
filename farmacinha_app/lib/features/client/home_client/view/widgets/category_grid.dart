@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:farmacia_app/core/palette/pallete.dart';
-import 'package:farmacia_app/features/client/home_client/data/category_model.dart';
+import 'package:farmacia_app/features/client/home_client/data/models/category_model.dart';
 
 class CategoryGrid extends StatelessWidget {
   final List<Category> categories;

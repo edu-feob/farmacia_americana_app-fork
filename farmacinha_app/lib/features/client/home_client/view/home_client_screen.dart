@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:farmacia_app/core/palette/pallete.dart';
 import 'package:farmacia_app/features/client/home_client/view_model/home_client_view_model.dart';
 import 'package:farmacia_app/features/client/home_client/view/widgets/product_card.dart';
-import 'package:farmacia_app/features/client/home_client/view/widgets/custom_app_bar.dart';
-import 'package:farmacia_app/features/client/home_client/view/widgets/custom_bottom_nav_bar.dart';
+import 'package:farmacia_app/features/client/widgets/custom_app_bar.dart';
+import 'package:farmacia_app/features/client/widgets/custom_bottom_nav_bar.dart';
 import 'package:farmacia_app/features/client/home_client/view/widgets/banner_carousel.dart';
 import 'package:farmacia_app/features/client/home_client/view/widgets/category_grid.dart';
+// IMPORT DA NOVA VIEW DE DETALHES
+import 'package:farmacia_app/features/client/product_detail/view/product_detail_view.dart';
 
 // ── Suas telas ────────────────────────────────────────────────────────────────
 import 'package:farmacia_app/features/client/account/view/account_screen.dart';
@@ -30,32 +32,24 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
 
   // Navega para a tela correspondente ao tab selecionado
   void _onTabTapped(int index) {
+    setState(() => _currentTabIndex = index);
+
     switch (index) {
       case 0:
-        // Home — permanece na mesma tela
-        setState(() => _currentTabIndex = 0);
         break;
+
       case 1:
-        // Buscar — placeholder
-        setState(() => _currentTabIndex = 1);
-        debugPrint('Abrir Buscar');
-        break;
-      case 2:
-        // Chat — placeholder
-        setState(() => _currentTabIndex = 2);
         debugPrint('Abrir Chat');
         break;
-      case 3:
-        // Carrinho — placeholder
-        setState(() => _currentTabIndex = 3);
+
+      case 2:
         debugPrint('Abrir Carrinho');
         break;
-      case 4:
-        // Conta — sua tela
-        setState(() => _currentTabIndex = 4);
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const AccountScreen()),
-        );
+
+      case 3:
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => const AccountScreen()));
         break;
     }
   }
@@ -89,47 +83,50 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
             return _buildErrorState();
           }
 
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSearchBar(),
-                BannerCarousel(
-                  banners: viewModel.banners,
-                  onTap: (id) => debugPrint('Banner $id clicado'),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Text(
-                    'Categorias',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 50, 50, 50),
+          return RefreshIndicator(
+            onRefresh: () async => viewModel.clearFilters(),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSearchBar(),
+                  BannerCarousel(
+                    banners: viewModel.banners,
+                    onTap: (id) => debugPrint('Banner $id clicado'),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text(
+                      'Categorias',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 50, 50, 50),
+                      ),
                     ),
                   ),
-                ),
-                CategoryGrid(
-                  categories: viewModel.categories,
-                  onCategoryTap: (id) => viewModel.selectCategory(id),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: Text(
-                    'Destaques para você',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 50, 50, 50),
+                  CategoryGrid(
+                    categories: viewModel.categories,
+                    onCategoryTap: (id) => viewModel.selectCategory(id),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    child: Text(
+                      'Destaques para você',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 50, 50, 50),
+                      ),
                     ),
                   ),
-                ),
-                if (viewModel.filteredProducts.isNotEmpty)
-                  _buildProductsGrid()
-                else
-                  _buildEmptyState(),
-                const SizedBox(height: 30),
-              ],
+                  if (viewModel.filteredProducts.isNotEmpty)
+                    _buildProductsGrid()
+                  else
+                    _buildEmptyState(),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
           );
         },
@@ -186,7 +183,15 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
             reviewCount: product.reviewCount,
             isOnPromotion: product.isOnPromotion,
             discountPercentage: product.discountPercentage,
-            onTap: () => viewModel.viewProductDetail(product),
+            onTap: () {
+              viewModel.viewProductDetail(product);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailView(product: product),
+                ),
+              );
+            },
             onAddToCart: () => viewModel.addToCart(product),
           );
         },
@@ -229,7 +234,7 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
           Text(viewModel.errorMessage ?? 'Ocorreu um erro inesperado'),
           const SizedBox(height: 16),
           ElevatedButton(
-            onPressed: () => setState(() {}),
+            onPressed: () => viewModel.clearFilters(),
             child: const Text('Tentar novamente'),
           ),
         ],

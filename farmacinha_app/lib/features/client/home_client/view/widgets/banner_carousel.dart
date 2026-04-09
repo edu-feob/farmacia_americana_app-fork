@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:farmacia_app/features/client/home_client/data/banner_model.dart';
+import 'package:farmacia_app/features/client/home_client/data/models/banner_model.dart';
 
 class BannerCarousel extends StatelessWidget {
   final List<BannerModel> banners;
