@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:farmacia_app/core/palette/pallete.dart';
+import 'package:farmacia_app/app/app_routes.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/widgets/attendant_chat_item.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/widgets/attendant_status_tile.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view_model/home_attendant_view_model.dart';
@@ -249,7 +250,14 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: viewModel.currentTab,
-        onTap: viewModel.setTab,
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.pushReplacementNamed(context, AppRoutes.attendantSearch);
+            return;
+          }
+
+          viewModel.setTab(index);
+        },
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Pallete.primaryRed,
         unselectedItemColor: const Color(0xFF94A3B8),
