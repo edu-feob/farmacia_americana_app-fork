@@ -29,7 +29,7 @@ class MockUsers {
         name: 'Gerente',
         email: 'teste.gerente@americana.com',
         password: '123',
-        role: UserRole.dono,
+        role: UserRole.gerente,
       ),
     ];
   }

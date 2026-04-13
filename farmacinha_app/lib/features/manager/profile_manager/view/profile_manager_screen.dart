@@ -4,6 +4,7 @@ import 'package:farmacia_app/features/manager/profile_manager/view/widgets/profi
 import 'package:farmacia_app/features/manager/profile_manager/view/widgets/profile_form.dart';
 import 'package:farmacia_app/features/manager/profile_manager/view/widgets/activity_history.dart';
 import 'package:farmacia_app/features/manager/profile_manager/view_model/profile_manager_view_model.dart';
+import 'package:farmacia_app/app/app_routes.dart';
 
 class ProfileManagerScreen extends StatefulWidget {
   const ProfileManagerScreen({super.key});
@@ -41,45 +42,48 @@ class _ProfileManagerScreenState extends State<ProfileManagerScreen> {
   // Exibe um diálogo de confirmação antes de fazer logout
   void _onLogout() {
     showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
-          'Sair da conta',
-          style: TextStyle(fontWeight: FontWeight.w700),
-        ),
-        content: const Text(
-          'Tem certeza que deseja sair?',
-          style: TextStyle(color: Pallete.textColor),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Cancelar',
-              style: TextStyle(color: Pallete.textColor),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // Futuramente: redirecionar para tela de login
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Pallete.primaryRed,
-              foregroundColor: Pallete.whiteColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Text(
-              'Sair',
-              style: TextStyle(fontWeight: FontWeight.w700),
-            ),
-          ),
-        ],
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: const Text(
+        'Sair da conta',
+        style: TextStyle(fontWeight: FontWeight.w700),
       ),
-    );
+      content: const Text(
+        'Tem certeza que deseja sair?',
+        style: TextStyle(color: Pallete.textColor),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text(
+            'Cancelar',
+            style: TextStyle(color: Pallete.textColor),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.login,
+              (route) => false, // remove todas as telas da pilha
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Pallete.primaryRed,
+            foregroundColor: Pallete.whiteColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: const Text(
+            'Sair',
+            style: TextStyle(fontWeight: FontWeight.w700),
+          ),
+        ),
+      ],
+    ),
+  );
   }
 
   @override
