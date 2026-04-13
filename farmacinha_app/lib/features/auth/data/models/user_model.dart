@@ -1,4 +1,4 @@
-enum UserRole { cliente, atendente, farmaceutico, dono }
+enum UserRole { cliente, atendente, farmaceutico, gerente }
 
 class User {
   final String id;

@@ -40,7 +40,8 @@ class LoginViewModel extends ChangeNotifier {
     User? authenticatedUser;
 
     for (final user in users) {
-      if (user.email.toLowerCase() == emailInput && user.password == passwordInput) {
+      if (user.email.toLowerCase() == emailInput &&
+          user.password == passwordInput) {
         authenticatedUser = user;
         break;
       }
@@ -61,6 +62,8 @@ class LoginViewModel extends ChangeNotifier {
         Navigator.pushReplacementNamed(context, AppRoutes.homeClient);
       } else if (authenticatedUser.role == UserRole.atendente) {
         Navigator.pushReplacementNamed(context, AppRoutes.homeAttendant);
+      } else if (authenticatedUser.role == UserRole.gerente) {
+        Navigator.pushReplacementNamed(context, AppRoutes.homeManager);
       } else {
         _showErrorSnackBar(
           context,

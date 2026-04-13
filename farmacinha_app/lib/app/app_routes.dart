@@ -14,6 +14,9 @@ import 'package:farmacia_app/features/client/orders/list/view/orders_screen.dart
 import 'package:farmacia_app/features/client/notifications/view/notifications_screen.dart';
 import 'package:farmacia_app/features/client/purchase_history/view/purchase_history_screen.dart';
 
+// ── Rotas do Gerente ───────────────────────────────────────────────────────────
+import 'package:farmacia_app/features/manager/manager_shell_screen.dart';
+
 class AppRoutes {
   // ── Auth ──────────────────────────────────────────────────────────────────
   static const String splash = '/';
@@ -26,6 +29,7 @@ class AppRoutes {
   static const String homeAttendant = '/home_attendant';
   static const String attendantSearch = '/attendant_search';
   static const String attendantChat = homeAttendant;
+  static const String homeManager = '/home_manager';
 
   // ── Features do cliente ───────────────────────────────────────────────────
   static const String account = '/account';
@@ -45,5 +49,6 @@ class AppRoutes {
         orders: (_) => OrdersScreen(),
         notifications: (_) => NotificationsScreen(),
         purchaseHistory: (_) => PurchaseHistoryScreen(),
+        homeManager: (_) => ManagerShellScreen(),
       };
 }
