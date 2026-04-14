@@ -8,11 +8,12 @@ import 'package:farmacia_app/features/client/home_client/view/home_client_screen
 import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_search_screen.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/home_attendant_screen.dart';
 
-// ── Rotas das features do cliente (suas) ──────────────────────────────────────
+// ── Rotas das features do cliente  ──────────────────────────────────────
 import 'package:farmacia_app/features/client/account/view/account_screen.dart';
 import 'package:farmacia_app/features/client/orders/list/view/orders_screen.dart';
 import 'package:farmacia_app/features/client/notifications/view/notifications_screen.dart';
 import 'package:farmacia_app/features/client/purchase_history/view/purchase_history_screen.dart';
+import 'package:farmacia_app/features/client/account/view/personal_data_screen.dart';
 
 // ── Rotas do Gerente ───────────────────────────────────────────────────────────
 import 'package:farmacia_app/features/manager/manager_shell_screen.dart';
@@ -36,6 +37,7 @@ class AppRoutes {
   static const String orders = '/orders';
   static const String notifications = '/notifications';
   static const String purchaseHistory = '/purchase_history';
+  static const String personalData = '/personal_data';
 
   static Map<String, WidgetBuilder> get routes => {
         splash: (_) => SplashScreen(),
@@ -50,5 +52,6 @@ class AppRoutes {
         notifications: (_) => NotificationsScreen(),
         purchaseHistory: (_) => PurchaseHistoryScreen(),
         homeManager: (_) => ManagerShellScreen(),
+        personalData: (_) => PersonalDataScreen(),
       };
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:farmacia_app/core/palette/pallete.dart';
 import 'package:farmacia_app/features/client/account/view_model/account_view_model.dart';
 import 'package:farmacia_app/features/client/orders/list/view/orders_screen.dart';
+import 'package:farmacia_app/features/client/account/view/personal_data_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -38,12 +39,6 @@ class _AccountScreenState extends State<AccountScreen> {
             fontSize: 18,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_rounded, color: Pallete.primaryRed),
-            onPressed: () => debugPrint('Abrir configurações'),
-          ),
-        ],
       ),
       body: ListenableBuilder(
         listenable: viewModel,
@@ -223,7 +218,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 iconColor: const Color(0xFF705D00),
                 title: 'Dados Pessoais',
                 subtitle: 'Edite suas informações de perfil',
-                onTap: () => debugPrint('Dados Pessoais'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const PersonalDataScreen()),
+                  );
+                },
               ),
             ),
           ],
