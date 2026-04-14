@@ -15,6 +15,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Drogaria Americana Saúde',
       debugShowCheckedModeBanner: false,
+       builder: (context, child) {
+        // Garante que nenhum ribbon/banner de ambiente apareça no topo da UI.
+        final safeChild = child ?? const SizedBox.shrink();
+        if (safeChild is Banner) {
+          return safeChild.child ?? const SizedBox.shrink();
+        }
+        return safeChild;
+      },
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: Pallete.backgroundColor,

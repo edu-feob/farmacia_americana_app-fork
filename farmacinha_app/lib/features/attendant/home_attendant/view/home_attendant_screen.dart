@@ -42,12 +42,16 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
               child: const Icon(Icons.person, color: Color(0xFF1A1A1A)),
             ),
             const SizedBox(width: 12),
-            const Text(
-              'PAINEL AMERICANA',
-              style: TextStyle(
-                color: Color(0xFF101828),
-                fontWeight: FontWeight.w800,
-                fontSize: 18,
+              const Expanded(
+              child: Text(
+                'PAINEL AMERICANA',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Color(0xFF101828),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                ),
               ),
             ),
           ],
