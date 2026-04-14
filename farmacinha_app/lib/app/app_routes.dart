@@ -8,6 +8,7 @@ import 'package:farmacia_app/features/client/home_client/view/home_client_screen
 import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_search_screen.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/home_attendant_screen.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_notications_screen.dart';
+import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_profile_screen.dart';
 
 // ── Rotas das features do cliente  ──────────────────────────────────────
 import 'package:farmacia_app/features/client/account/view/account_screen.dart';
@@ -32,7 +33,8 @@ class AppRoutes {
   static const String homeAttendant = '/home_attendant';
   static const String attendantSearch = '/attendant_search';
   static const String attendantChat = homeAttendant;
-    static const String attendantNotifications = '/attendant_notifications';
+  static const String attendantNotifications = '/attendant_notifications';
+  static const String attendantProfile = '/attendant_profile';
   static const String homeManager = '/home_manager';
 
   // ── Features do cliente ───────────────────────────────────────────────────
@@ -52,6 +54,7 @@ class AppRoutes {
         homeAttendant: (_) => HomeAttendantScreen(),
         attendantSearch: (_) => AttendantSearchScreen(),
         attendantNotifications: (_) => AttendantNotificationsScreen(),
+        attendantProfile: (_) => AttendantProfileScreen(),
         account: (_) => AccountScreen(),
         orders: (_) => OrdersScreen(),
         notifications: (_) => NotificationsScreen(),

@@ -262,6 +262,12 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
             return;
           }
 
+             if (index == 3) {
+            Navigator.pushNamed(context, AppRoutes.attendantProfile);
+            return;
+          }
+
+
           viewModel.setTab(index);
         },
         type: BottomNavigationBarType.fixed,

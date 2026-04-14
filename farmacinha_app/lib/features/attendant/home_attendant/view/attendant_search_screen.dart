@@ -224,6 +224,11 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
                 content: Text('Tela de chat ainda não disponível.'),
               ),
             );
+                return;
+          }
+
+          if (index == 3) {
+            Navigator.pushNamed(context, AppRoutes.attendantProfile);
           }
         },
         type: BottomNavigationBarType.fixed,
