@@ -3,6 +3,7 @@ import 'package:farmacia_app/core/palette/pallete.dart';
 import 'package:farmacia_app/features/client/account/view_model/account_view_model.dart';
 import 'package:farmacia_app/features/client/orders/list/view/orders_screen.dart';
 import 'package:farmacia_app/features/client/account/view/personal_data_screen.dart';
+import 'package:farmacia_app/features/client/account/view/favorite_products_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -239,7 +240,13 @@ class _AccountScreenState extends State<AccountScreen> {
                 iconColor: const Color(0xFFBA1A1A),
                 title: 'Produtos Favoritos',
                 subtitle: 'Sua lista de desejos e recorrentes',
-                onTap: () => debugPrint('Favoritos'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const FavoriteProductsScreen(),
+                    ),
+                  );
+                },
               ),
             ),
             const SizedBox(width: 12),
