@@ -262,7 +262,12 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
             return;
           }
 
-             if (index == 3) {
+               if (index == 2) {
+            Navigator.pushReplacementNamed(context, AppRoutes.attendantChat);
+            return;
+          }
+
+          if (index == 3) {
             Navigator.pushNamed(context, AppRoutes.attendantProfile);
             return;
           }

@@ -183,10 +183,10 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
                       child: _RecentClientCard(
                         client: client,
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Tela de chat ainda não disponível.'),
-                            ),
+                         Navigator.pushNamed(
+                            context,
+                            AppRoutes.attendantChat,
+                            arguments: client.id,
                           );
                         },
                       ),
@@ -257,11 +257,7 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
           }
 
           if (index == 2) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Tela de chat ainda não disponível.')),
-            );
-            return;
-          }
+           Navigator.pushReplacementNamed(context, AppRoutes.attendantChat);}
 
           if (index == 3) {
             Navigator.pushNamed(context, AppRoutes.attendantProfile);

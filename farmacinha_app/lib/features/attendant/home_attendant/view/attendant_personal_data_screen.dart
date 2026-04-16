@@ -344,8 +344,7 @@ class _AttendantPersonalDataScreenState
       return;
     }
 
-    _showInfo('Tela de chat ainda não disponível.');
-  }
+    Navigator.pushReplacementNamed(context, AppRoutes.attendantChat);  }
 
   void _showInfo(String message) {
     ScaffoldMessenger.of(context).showSnackBar(

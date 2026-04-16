@@ -188,10 +188,9 @@ class _AttendantProfileScreenState extends State<AttendantProfileScreen> {
               }
 
               if (index == 2) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Tela de chat ainda não disponível.'),
-                  ),
+                Navigator.pushReplacementNamed(
+                  context,
+                  AppRoutes.attendantChat,
                 );
               }
             },
