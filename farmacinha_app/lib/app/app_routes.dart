@@ -19,6 +19,7 @@ import 'package:farmacia_app/features/client/notifications/view/notifications_sc
 import 'package:farmacia_app/features/client/purchase_history/view/purchase_history_screen.dart';
 import 'package:farmacia_app/features/client/account/view/personal_data_screen.dart';
 import 'package:farmacia_app/features/client/account/view/favorite_products_screen.dart';
+import 'package:farmacia_app/features/client/account/view/payment_methods_screen.dart';
 import 'package:farmacia_app/features/client/search/view/search_result_view.dart';
 import 'package:farmacia_app/features/client/product_detail/view/product_detail_view.dart';
 import 'package:farmacia_app/features/client/home_client/data/models/product_model.dart'; // Import necessário para o Cast do argumento
@@ -50,6 +51,7 @@ class AppRoutes {
   static const String purchaseHistory = '/purchase_history';
   static const String personalData = '/personal_data';
   static const String favorites = '/favorites';
+  static const String paymentMethods = '/payment_methods';
   static const String searchResult = '/search_result';
   static const String productDetail = '/product_detail';
 
@@ -72,6 +74,7 @@ class AppRoutes {
     homeManager: (_) => ManagerShellScreen(),
     personalData: (_) => PersonalDataScreen(),
     favorites: (_) => FavoriteProductsScreen(),
+    paymentMethods: (_) => PaymentMethodsScreen(),
     searchResult: (_) => SearchResultScreen(),
     productDetail: (_) => ProductDetailScreen(),
   };
