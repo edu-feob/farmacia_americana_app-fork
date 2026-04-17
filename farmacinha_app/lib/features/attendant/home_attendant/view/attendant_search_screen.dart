@@ -53,16 +53,21 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
           ],
         ),
         actions: [
-          Container(
-            width: 46,
-            height: 46,
-            margin: const EdgeInsets.only(right: 16),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: Pallete.primaryRed, width: 2),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutes.attendantProfile);
+            },
+            child: Container(
+              width: 46,
+              height: 46,
+              margin: const EdgeInsets.only(right: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: Pallete.primaryRed, width: 2),
+              ),
+              child: const Icon(Icons.person, color: Color(0xFF111111)),
             ),
-            child: const Icon(Icons.person, color: Colors.white),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:farmacia_app/app/app_routes.dart';
 import 'package:farmacia_app/core/palette/pallete.dart';
 
 class AttendantNotificationsScreen extends StatelessWidget {
@@ -84,7 +85,9 @@ class AttendantNotificationsScreen extends StatelessWidget {
                 description:
                     'Mariana Silva enviou uma nova mensagem sobre o seu pedido em andamento.',
                 actionLabel: 'Responder',
-                onActionPressed: () {},
+                onActionPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.attendantChat);
+                },
               ),
             ],
           ),
