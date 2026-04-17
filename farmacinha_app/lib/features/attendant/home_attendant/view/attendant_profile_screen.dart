@@ -105,7 +105,12 @@ class _AttendantProfileScreenState extends State<AttendantProfileScreen> {
                       _MenuRow(
                         icon: Icons.badge_rounded,
                         label: 'Meus Atendimentos',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.attendantChat,
+                          );
+                        },
                       ),
                       _MenuRow(
                         icon: Icons.person_outline_rounded,

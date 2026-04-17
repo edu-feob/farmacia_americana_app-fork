@@ -31,15 +31,20 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
         titleSpacing: 16,
         title: Row(
           children: [
-            Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Pallete.primaryRed, width: 2),
-                color: const Color(0xFFECEFF4),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.attendantProfile);
+              },
+              child: Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Pallete.primaryRed, width: 2),
+                  color: const Color(0xFFECEFF4),
+                ),
+                child: const Icon(Icons.person, color: Color(0xFF1A1A1A)),
               ),
-              child: const Icon(Icons.person, color: Color(0xFF1A1A1A)),
             ),
             const SizedBox(width: 12),
               const Expanded(
@@ -80,7 +85,9 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
             ],
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.attendantProfile);
+            },
             icon: const Icon(Icons.settings, color: Color(0xFF111827)),
           ),
           const SizedBox(width: 8),
