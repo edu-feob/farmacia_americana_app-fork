@@ -65,10 +65,10 @@ class _StockManagerScreenState extends State<StockManagerScreen> {
             ),
           ),
           const SizedBox(width: 12),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'FARMÁCIA AMERICANA',
                 style: TextStyle(
                   fontSize: 11,
@@ -125,7 +125,7 @@ class _StockManagerScreenState extends State<StockManagerScreen> {
                 const SizedBox(height: 4),
                 Text(
                   '${_viewModel.totalProducts} produtos cadastrados',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 13,
                     color: Pallete.textColor,
                   ),

@@ -55,8 +55,6 @@ class _AttendantChatScreenState extends State<AttendantChatScreen> {
         titleSpacing: 16,
         title: const Row(
           children: [
-            Icon(Icons.menu, color: Color(0xFF101828), size: 32),
-            SizedBox(width: 18),
             Text(
               'FARMÁCIA AMERICANA',
               style: TextStyle(
@@ -70,7 +68,11 @@ class _AttendantChatScreenState extends State<AttendantChatScreen> {
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications, color: Color(0xFF101828), size: 28),
+            child: Icon(
+              Icons.notifications,
+              color: Color(0xFF101828),
+              size: 28,
+            ),
           ),
         ],
       ),
@@ -132,9 +134,7 @@ class _AttendantChatScreenState extends State<AttendantChatScreen> {
                 if (_viewModel.clients.isEmpty)
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 24),
-                    child: Center(
-                      child: Text('Nenhuma conversa encontrada.'),
-                    ),
+                    child: Center(child: Text('Nenhuma conversa encontrada.')),
                   )
                 else
                   ..._viewModel.clients.map(
@@ -145,6 +145,11 @@ class _AttendantChatScreenState extends State<AttendantChatScreen> {
                         isSelected: _viewModel.selectedClientId == client.id,
                         onTap: () {
                           _viewModel.selectClient(client.id);
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.attendantChatDetail,
+                            arguments: client.id,
+                          );
                         },
                       ),
                     ),
@@ -153,11 +158,6 @@ class _AttendantChatScreenState extends State<AttendantChatScreen> {
             ),
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Pallete.primaryRed,
-        onPressed: () {},
-        child: const Icon(Icons.post_add, color: Colors.white),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 2,
@@ -180,7 +180,10 @@ class _AttendantChatScreenState extends State<AttendantChatScreen> {
         selectedItemColor: Pallete.primaryRed,
         unselectedItemColor: const Color(0xFF707A89),
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Início'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: 'Início',
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Buscar'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
@@ -272,8 +275,9 @@ class _ChatClientCard extends StatelessWidget {
                             ? Pallete.primaryRed
                             : const Color(0xFF4F3131),
                         fontSize: 16,
-                        fontWeight:
-                            isSelected ? FontWeight.w600 : FontWeight.w400,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.w400,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -291,8 +295,9 @@ class _ChatClientCard extends StatelessWidget {
                       color: isSelected
                           ? Pallete.primaryRed
                           : const Color(0xFF6F5959),
-                      fontWeight:
-                          isSelected ? FontWeight.w800 : FontWeight.w600,
+                      fontWeight: isSelected
+                          ? FontWeight.w800
+                          : FontWeight.w600,
                       fontSize: 14,
                     ),
                   ),

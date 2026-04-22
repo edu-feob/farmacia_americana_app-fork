@@ -9,6 +9,7 @@ class HomeAttendantViewModel extends ChangeNotifier {
 
   List<AttendantChat> _allChats = [];
   List<AttendantChat> _filteredChats = [];
+  List<AttendantStatus> _baseStatusList = [];
   List<AttendantStatus> _statusList = [];
 
   String _selectedStatus = 'em_atendimento';
@@ -21,7 +22,8 @@ class HomeAttendantViewModel extends ChangeNotifier {
 
   HomeAttendantViewModel() {
     _allChats = MockAttendantChats.getChats();
-    _statusList = MockAttendantStatus.getStatusList();
+    _baseStatusList = MockAttendantStatus.getStatusList();
+    _updateStatusCounts();
     _applyFilters();
     searchController.addListener(_applyFilters);
   }
@@ -41,13 +43,27 @@ class HomeAttendantViewModel extends ChangeNotifier {
 
     _filteredChats = _allChats.where((chat) {
       final statusMatch = chat.status == _selectedStatus;
-      final queryMatch = query.isEmpty ||
+      final queryMatch =
+          query.isEmpty ||
           chat.customerName.toLowerCase().contains(query) ||
           chat.preview.toLowerCase().contains(query);
       return statusMatch && queryMatch;
     }).toList();
 
     notifyListeners();
+  }
+
+  void _updateStatusCounts() {
+    _statusList = _baseStatusList.map((status) {
+      final count = _allChats.where((chat) => chat.status == status.id).length;
+
+      return AttendantStatus(
+        id: status.id,
+        label: status.label,
+        count: count,
+        icon: status.icon,
+      );
+    }).toList();
   }
 
   @override

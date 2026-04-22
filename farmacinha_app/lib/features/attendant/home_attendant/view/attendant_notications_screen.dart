@@ -66,9 +66,9 @@ class AttendantNotificationsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              _UrgentCard(
+              const _UrgentCard(
                 icon: Icons.error,
-                iconBackground: const Color(0xFFFDE8E8),
+                iconBackground: Color(0xFFFDE8E8),
                 iconColor: Pallete.primaryRed,
                 timeLabel: 'AGORA',
                 title: 'Ruptura de Estoque',
@@ -86,7 +86,11 @@ class AttendantNotificationsScreen extends StatelessWidget {
                     'Mariana Silva enviou uma nova mensagem sobre o seu pedido em andamento.',
                 actionLabel: 'Responder',
                 onActionPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.attendantChat);
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.attendantChatDetail,
+                    arguments: 'client-1',
+                  );
                 },
               ),
             ],
@@ -125,9 +129,15 @@ class _UrgentCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: const Border(left: BorderSide(color: Pallete.primaryRed, width: 4)),
+        border: const Border(
+          left: BorderSide(color: Pallete.primaryRed, width: 4),
+        ),
         boxShadow: const [
-          BoxShadow(color: Color(0x14000000), blurRadius: 18, offset: Offset(0, 8)),
+          BoxShadow(
+            color: Color(0x14000000),
+            blurRadius: 18,
+            offset: Offset(0, 8),
+          ),
         ],
       ),
       child: Padding(
@@ -185,11 +195,16 @@ class _UrgentCard extends StatelessWidget {
                     backgroundColor: Pallete.primaryRed,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                   child: Text(
                     actionLabel!,
-                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),

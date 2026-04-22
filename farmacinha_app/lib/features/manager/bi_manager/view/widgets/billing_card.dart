@@ -27,7 +27,7 @@ class BillingCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
             Pallete.primaryRed,
             Pallete.redDark,

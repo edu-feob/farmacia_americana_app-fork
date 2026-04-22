@@ -35,10 +35,10 @@ class BestSellers extends StatelessWidget {
       child: Column(
         children: [
           // Cabeçalho
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Mais Vendidos',
                 style: TextStyle(
                   fontSize: 16,

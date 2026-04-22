@@ -8,6 +8,7 @@ import 'package:farmacia_app/features/client/home_client/view/home_client_screen
 import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_search_screen.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/home_attendant_screen.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_chat_screen.dart';
+import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_chat_detail_screen.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_notications_screen.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_profile_screen.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view/attendant_personal_data_screen.dart';
@@ -22,7 +23,7 @@ import 'package:farmacia_app/features/client/account/view/favorite_products_scre
 import 'package:farmacia_app/features/client/account/view/payment_methods_screen.dart';
 import 'package:farmacia_app/features/client/search/view/search_result_view.dart';
 import 'package:farmacia_app/features/client/product_detail/view/product_detail_view.dart';
-import 'package:farmacia_app/features/client/home_client/data/models/product_model.dart'; // Import necessário para o Cast do argumento
+// Import necessário para o Cast do argumento
 
 // ── Rotas do Gerente ───────────────────────────────────────────────────────────
 import 'package:farmacia_app/features/manager/manager_shell_screen.dart';
@@ -39,6 +40,7 @@ class AppRoutes {
   static const String homeAttendant = '/home_attendant';
   static const String attendantSearch = '/attendant_search';
   static const String attendantChat = '/attendant_chat';
+  static const String attendantChatDetail = '/attendant_chat_detail';
   static const String attendantNotifications = '/attendant_notifications';
   static const String attendantProfile = '/attendant_profile';
   static const String attendantPersonalData = '/attendant_personal_data';
@@ -64,6 +66,7 @@ class AppRoutes {
     homeAttendant: (_) => HomeAttendantScreen(),
     attendantSearch: (_) => AttendantSearchScreen(),
     attendantChat: (_) => AttendantChatScreen(),
+    attendantChatDetail: (_) => AttendantChatDetailScreen(),
     attendantNotifications: (_) => AttendantNotificationsScreen(),
     attendantProfile: (_) => AttendantProfileScreen(),
     attendantPersonalData: (_) => AttendantPersonalDataScreen(),

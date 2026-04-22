@@ -40,8 +40,6 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
         titleSpacing: 16,
         title: const Row(
           children: [
-            Icon(Icons.menu, color: Color(0xFFB80000), size: 32),
-            SizedBox(width: 18),
             Text(
               'PAINEL AMERICANA',
               style: TextStyle(
@@ -177,9 +175,7 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
                 if (clients.isEmpty)
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 24),
-                    child: Center(
-                      child: Text('Nenhum cliente encontrado.'),
-                    ),
+                    child: Center(child: Text('Nenhum cliente encontrado.')),
                   )
                 else
                   ...clients.map(
@@ -188,9 +184,9 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
                       child: _RecentClientCard(
                         client: client,
                         onTap: () {
-                         Navigator.pushNamed(
+                          Navigator.pushNamed(
                             context,
-                            AppRoutes.attendantChat,
+                            AppRoutes.attendantChatDetail,
                             arguments: client.id,
                           );
                         },
@@ -262,7 +258,8 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
           }
 
           if (index == 2) {
-           Navigator.pushReplacementNamed(context, AppRoutes.attendantChat);}
+            Navigator.pushReplacementNamed(context, AppRoutes.attendantChat);
+          }
 
           if (index == 3) {
             Navigator.pushNamed(context, AppRoutes.attendantProfile);
@@ -276,18 +273,9 @@ class _AttendantSearchScreenState extends State<AttendantSearchScreen> {
             icon: Icon(Icons.home_rounded),
             label: 'INÍCIO',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'BUSCAR',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble),
-            label: 'CHAT',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'PERFIL',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'BUSCAR'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: 'CHAT'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'PERFIL'),
         ],
       ),
     );
@@ -298,10 +286,7 @@ class _RecentClientCard extends StatelessWidget {
   final AttendantSearchClient client;
   final VoidCallback onTap;
 
-  const _RecentClientCard({
-    required this.client,
-    required this.onTap,
-  });
+  const _RecentClientCard({required this.client, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

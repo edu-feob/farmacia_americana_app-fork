@@ -7,8 +7,7 @@ class AttendantProfileScreen extends StatefulWidget {
   const AttendantProfileScreen({super.key});
 
   @override
-  State<AttendantProfileScreen> createState() =>
-      _AttendantProfileScreenState();
+  State<AttendantProfileScreen> createState() => _AttendantProfileScreenState();
 }
 
 class _AttendantProfileScreenState extends State<AttendantProfileScreen> {
@@ -32,8 +31,6 @@ class _AttendantProfileScreenState extends State<AttendantProfileScreen> {
             titleSpacing: 16,
             title: const Row(
               children: [
-                Icon(Icons.menu, color: Color(0xFF111111), size: 32),
-                SizedBox(width: 18),
                 Text(
                   'FARMÁCIA AMERICANA',
                   style: TextStyle(
@@ -106,10 +103,7 @@ class _AttendantProfileScreenState extends State<AttendantProfileScreen> {
                         icon: Icons.badge_rounded,
                         label: 'Meus Atendimentos',
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            AppRoutes.attendantChat,
-                          );
+                          Navigator.pushNamed(context, AppRoutes.attendantChat);
                         },
                       ),
                       _MenuRow(
@@ -303,8 +297,7 @@ class _MenuRow extends StatelessWidget {
             ),
           ),
         ),
-        if (showDivider)
-          const Divider(height: 1, color: Color(0xFFE8E8E8)),
+        if (showDivider) const Divider(height: 1, color: Color(0xFFE8E8E8)),
       ],
     );
   }

@@ -275,9 +275,9 @@ class _FavoriteProductsScreenState extends State<FavoriteProductsScreen> {
         color: _surfaceHighest,
         borderRadius: BorderRadius.circular(28),
       ),
-      child: Row(
+      child: const Row(
         children: [
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -300,13 +300,13 @@ class _FavoriteProductsScreenState extends State<FavoriteProductsScreen> {
               ],
             ),
           ),
-          const SizedBox(width: 12),
-          const _TipIcon(
+          SizedBox(width: 12),
+          _TipIcon(
             icon: Icons.auto_awesome_rounded,
             iconColor: Color(0xFF705D00),
           ),
-          const SizedBox(width: 8),
-          const _TipIcon(
+          SizedBox(width: 8),
+          _TipIcon(
             icon: Icons.health_and_safety_rounded,
             iconColor: Color(0xFF005F93),
           ),

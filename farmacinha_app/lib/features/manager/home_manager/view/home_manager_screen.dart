@@ -45,10 +45,10 @@ class HomeManagerScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'FARMÁCIA AMERICANA',
                 style: TextStyle(
                   fontSize: 11,
@@ -99,7 +99,7 @@ class HomeManagerScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          Text(
+          const Text(
             'Visão consolidada da rede Farmácia Americana hoje.',
             style: TextStyle(fontSize: 13, color: Pallete.textColor),
           ),

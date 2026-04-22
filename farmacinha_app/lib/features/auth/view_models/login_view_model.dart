@@ -59,11 +59,23 @@ class LoginViewModel extends ChangeNotifier {
 
     try {
       if (authenticatedUser.role == UserRole.cliente) {
-        Navigator.pushReplacementNamed(context, AppRoutes.homeClient);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.homeClient,
+          (route) => false,
+        );
       } else if (authenticatedUser.role == UserRole.atendente) {
-        Navigator.pushReplacementNamed(context, AppRoutes.homeAttendant);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.homeAttendant,
+          (route) => false,
+        );
       } else if (authenticatedUser.role == UserRole.gerente) {
-        Navigator.pushReplacementNamed(context, AppRoutes.homeManager);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.homeManager,
+          (route) => false,
+        );
       } else {
         _showErrorSnackBar(
           context,

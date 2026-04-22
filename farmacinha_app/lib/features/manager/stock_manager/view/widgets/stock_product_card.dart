@@ -103,7 +103,7 @@ class StockProductCard extends StatelessWidget {
           // Categoria
           Text(
             category,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w600,
               color: Pallete.textColor,

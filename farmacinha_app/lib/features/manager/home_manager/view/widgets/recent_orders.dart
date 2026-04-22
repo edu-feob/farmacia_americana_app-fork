@@ -115,9 +115,9 @@ class _RecentOrdersState extends State<RecentOrders> {
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Pallete.grayColor,
-                borderRadius: const BorderRadius.vertical(
+                borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(16),
                 ),
               ),

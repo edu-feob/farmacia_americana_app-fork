@@ -47,7 +47,7 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
               ),
             ),
             const SizedBox(width: 12),
-              const Expanded(
+            const Expanded(
               child: Text(
                 'PAINEL AMERICANA',
                 maxLines: 1,
@@ -65,8 +65,11 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
           Stack(
             children: [
               IconButton(
-                  onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.attendantNotifications);
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.attendantNotifications,
+                  );
                 },
                 icon: const Icon(Icons.notifications, color: Color(0xFF111827)),
               ),
@@ -76,9 +79,15 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                 child: Container(
                   width: 18,
                   height: 18,
-                  decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
                   child: const Center(
-                    child: Text('3', style: TextStyle(color: Colors.white, fontSize: 10)),
+                    child: Text(
+                      '3',
+                      style: TextStyle(color: Colors.white, fontSize: 10),
+                    ),
                   ),
                 ),
               ),
@@ -112,8 +121,14 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                           controller: viewModel.searchController,
                           decoration: InputDecoration(
                             hintText: 'Nome ou CPF do cliente...',
-                            hintStyle: const TextStyle(color: Color(0xFF8B9BB4), fontSize: 15),
-                            prefixIcon: const Icon(Icons.search, color: Color(0xFF8B9BB4)),
+                            hintStyle: const TextStyle(
+                              color: Color(0xFF8B9BB4),
+                              fontSize: 15,
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Color(0xFF8B9BB4),
+                            ),
                             filled: true,
                             fillColor: const Color(0xFFE9EEF5),
                             border: OutlineInputBorder(
@@ -132,11 +147,17 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                     decoration: BoxDecoration(
                       color: const Color(0xFFFEEDEF),
                       borderRadius: BorderRadius.circular(10),
-                      border: const Border(left: BorderSide(color: Pallete.primaryRed, width: 4)),
+                      border: const Border(
+                        left: BorderSide(color: Pallete.primaryRed, width: 4),
+                      ),
                     ),
                     child: const Row(
                       children: [
-                        Icon(Icons.warning_rounded, color: Pallete.primaryRed, size: 34),
+                        Icon(
+                          Icons.warning_rounded,
+                          color: Pallete.primaryRed,
+                          size: 34,
+                        ),
                         SizedBox(width: 14),
                         Expanded(
                           child: Column(
@@ -153,7 +174,10 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                               SizedBox(height: 2),
                               Text(
                                 'Resposta imediata necessária (>5 min).',
-                                style: TextStyle(fontSize: 14, color: Color(0xFFEA5A63)),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xFFEA5A63),
+                                ),
                               ),
                             ],
                           ),
@@ -202,7 +226,10 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFE8F8EF),
                           borderRadius: BorderRadius.circular(24),
@@ -210,11 +237,17 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                         ),
                         child: const Row(
                           children: [
-                            CircleAvatar(radius: 4, backgroundColor: Color(0xFF27C281)),
+                            CircleAvatar(
+                              radius: 4,
+                              backgroundColor: Color(0xFF27C281),
+                            ),
                             SizedBox(width: 8),
                             Text(
                               'Sistema\nOnline',
-                              style: TextStyle(color: Color(0xFF036B44), fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                color: Color(0xFF036B44),
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ],
                         ),
@@ -228,14 +261,25 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 28),
                       child: Center(
-                        child: Text('Nenhuma conversa encontrada para este filtro.'),
+                        child: Text(
+                          'Nenhuma conversa encontrada para este filtro.',
+                        ),
                       ),
                     )
                   else
                     ...viewModel.chats.map(
                       (chat) => Padding(
                         padding: const EdgeInsets.only(bottom: 12),
-                        child: AttendantChatItem(chat: chat),
+                        child: AttendantChatItem(
+                          chat: chat,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.attendantChatDetail,
+                              arguments: chat.id,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   const SizedBox(height: 20),
@@ -246,12 +290,17 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF0B1534),
                         foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                       onPressed: () {},
                       child: const Text(
                         'CARREGAR CONVERSAS ANTERIORES',
-                        style: TextStyle(letterSpacing: 1.2, fontWeight: FontWeight.w700),
+                        style: TextStyle(
+                          letterSpacing: 1.2,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),
@@ -269,7 +318,7 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
             return;
           }
 
-               if (index == 2) {
+          if (index == 2) {
             Navigator.pushReplacementNamed(context, AppRoutes.attendantChat);
             return;
           }
@@ -279,7 +328,6 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
             return;
           }
 
-
           viewModel.setTab(index);
         },
         type: BottomNavigationBarType.fixed,
@@ -288,7 +336,10 @@ class _HomeAttendantScreenState extends State<HomeAttendantScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'HOME'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'BUSCA'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble_outline), label: 'CHAT'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline),
+            label: 'CHAT',
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'PERFIL'),
         ],
       ),
