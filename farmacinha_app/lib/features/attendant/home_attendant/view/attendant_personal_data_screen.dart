@@ -4,7 +4,6 @@ import 'package:farmacia_app/app/app_routes.dart';
 import 'package:farmacia_app/core/palette/pallete.dart';
 import 'package:farmacia_app/features/attendant/home_attendant/view_model/attendant_personal_viewl_model.dart';
 
-
 class AttendantPersonalDataScreen extends StatefulWidget {
   const AttendantPersonalDataScreen({super.key});
 
@@ -124,7 +123,7 @@ class _AttendantPersonalDataScreenState
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_rounded),
-                label: 'INÍCIO',
+                label: 'IN\u00cdCIO',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.search),
@@ -248,7 +247,7 @@ class _AttendantPersonalDataScreenState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Segurança da Conta',
+                    'Seguran\u00e7a da Conta',
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
@@ -257,11 +256,8 @@ class _AttendantPersonalDataScreenState
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Última alteração há 3 meses',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF5D3F3C),
-                    ),
+                    '\u00daltima altera\u00e7\u00e3o h\u00e1 3 meses',
+                    style: TextStyle(fontSize: 13, color: Color(0xFF5D3F3C)),
                   ),
                 ],
               ),
@@ -269,7 +265,9 @@ class _AttendantPersonalDataScreenState
           ),
           const SizedBox(height: 18),
           GestureDetector(
-            onTap: () => _showChangePasswordSheet(context),
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutes.attendantSecurity);
+            },
             child: const Text(
               'Alterar Senha',
               style: TextStyle(
@@ -312,11 +310,8 @@ class _AttendantPersonalDataScreenState
           padding: const EdgeInsets.symmetric(vertical: 20),
         ),
         child: const Text(
-          'Salvar Alterações',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          'Salvar Altera\u00e7\u00f5es',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -344,43 +339,13 @@ class _AttendantPersonalDataScreenState
       return;
     }
 
-    Navigator.pushReplacementNamed(context, AppRoutes.attendantChat);  }
+    Navigator.pushReplacementNamed(context, AppRoutes.attendantChat);
+  }
 
   void _showInfo(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
-
-  void _showChangePasswordSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) => _ChangePasswordSheet(onMessage: _showGlobalMessage),
-    );
-  }
-
-  void _showGlobalMessage(String message) {
-    showDialog<void>(
-      context: context,
-      useRootNavigator: true,
-      builder: (dialogContext) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text(
-              'OK',
-              style: TextStyle(color: Pallete.primaryRed),
-            ),
-          ),
-        ],
-      ),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 }
 
@@ -430,182 +395,5 @@ class PhoneInputFormatter extends TextInputFormatter {
       text: formatted,
       selection: TextSelection.collapsed(offset: formatted.length),
     );
-  }
-}
-
-class _ChangePasswordSheet extends StatefulWidget {
-  final ValueChanged<String> onMessage;
-
-  const _ChangePasswordSheet({required this.onMessage});
-
-  @override
-  State<_ChangePasswordSheet> createState() => _ChangePasswordSheetState();
-}
-
-class _ChangePasswordSheetState extends State<_ChangePasswordSheet> {
-  late final ChangePasswordViewModel _passwordViewModel;
-
-  @override
-  void initState() {
-    super.initState();
-    _passwordViewModel = ChangePasswordViewModel();
-  }
-
-  @override
-  void dispose() {
-    _passwordViewModel.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: _passwordViewModel,
-      builder: (context, _) {
-        return Padding(
-          padding: EdgeInsets.only(
-            left: 16,
-            right: 16,
-            top: 16,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Alterar Senha',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1E1615),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                _buildPasswordField(
-                  controller: _passwordViewModel.currentPasswordController,
-                  label: 'Senha atual',
-                  obscureText: _passwordViewModel.hideCurrent,
-                  onToggleVisibility:
-                      _passwordViewModel.toggleCurrentVisibility,
-                ),
-                const SizedBox(height: 12),
-                _buildPasswordField(
-                  controller: _passwordViewModel.newPasswordController,
-                  label: 'Nova senha',
-                  obscureText: _passwordViewModel.hideNew,
-                  onToggleVisibility: _passwordViewModel.toggleNewVisibility,
-                ),
-                const SizedBox(height: 12),
-                _buildPasswordField(
-                  controller: _passwordViewModel.confirmPasswordController,
-                  label: 'Confirmar nova senha',
-                  obscureText: _passwordViewModel.hideConfirm,
-                  onToggleVisibility:
-                      _passwordViewModel.toggleConfirmVisibility,
-                ),
-                const SizedBox(height: 14),
-                _buildRequirement(
-                  'Mínimo de 6 caracteres',
-                  _passwordViewModel.hasMinLength,
-                ),
-                _buildRequirement(
-                  '1 letra maiúscula',
-                  _passwordViewModel.hasUppercase,
-                ),
-                _buildRequirement(
-                  '1 letra minúscula',
-                  _passwordViewModel.hasLowercase,
-                ),
-                _buildRequirement(
-                  '1 caractere numérico',
-                  _passwordViewModel.hasNumber,
-                ),
-                const SizedBox(height: 18),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _saveNewPassword,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Pallete.primaryRed,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: const Text('Salvar nova senha'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildPasswordField({
-    required TextEditingController controller,
-    required String label,
-    required bool obscureText,
-    required VoidCallback onToggleVisibility,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-        suffixIcon: IconButton(
-          onPressed: onToggleVisibility,
-          icon: Icon(
-            obscureText ? Icons.visibility_off : Icons.visibility,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRequirement(String text, bool met) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Row(
-        children: [
-          Icon(
-            met ? Icons.check_circle : Icons.cancel,
-            size: 16,
-            color: met ? Colors.green : Pallete.primaryRed,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            text,
-            style: TextStyle(
-              color: met ? Colors.green : Pallete.primaryRed,
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _saveNewPassword() {
-    final result = _passwordViewModel.validate();
-
-    if (result.shouldCloseSheet) {
-      Navigator.of(context).pop();
-    }
-
-    widget.onMessage(result.message);
   }
 }

@@ -108,9 +108,11 @@ class AttendantPersonalDataViewModel extends ChangeNotifier {
 }
 
 class ChangePasswordViewModel extends ChangeNotifier {
-  final TextEditingController currentPasswordController = TextEditingController();
+  final TextEditingController currentPasswordController =
+      TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   bool _hideCurrent = true;
   bool _hideNew = true;
@@ -121,8 +123,10 @@ class ChangePasswordViewModel extends ChangeNotifier {
   bool get hideConfirm => _hideConfirm;
 
   bool get hasMinLength => newPasswordController.text.length >= 6;
-  bool get hasUppercase => RegExp(r'[A-Z]').hasMatch(newPasswordController.text);
-  bool get hasLowercase => RegExp(r'[a-z]').hasMatch(newPasswordController.text);
+  bool get hasUppercase =>
+      RegExp(r'[A-Z]').hasMatch(newPasswordController.text);
+  bool get hasLowercase =>
+      RegExp(r'[a-z]').hasMatch(newPasswordController.text);
   bool get hasNumber => RegExp(r'[0-9]').hasMatch(newPasswordController.text);
 
   ChangePasswordViewModel() {
@@ -145,7 +149,8 @@ class ChangePasswordViewModel extends ChangeNotifier {
   }
 
   PasswordSaveResult validate() {
-    final hasAllRules = hasMinLength && hasUppercase && hasLowercase && hasNumber;
+    final hasAllRules =
+        hasMinLength && hasUppercase && hasLowercase && hasNumber;
 
     if (currentPasswordController.text.isEmpty) {
       return const PasswordSaveResult(
@@ -156,14 +161,15 @@ class ChangePasswordViewModel extends ChangeNotifier {
 
     if (!hasAllRules) {
       return const PasswordSaveResult(
-        message: 'A nova senha não atende aos requisitos.',
+        message:
+            'A nova senha n\u00e3o atende aos requisitos de seguran\u00e7a.',
         shouldCloseSheet: false,
       );
     }
 
     if (newPasswordController.text != confirmPasswordController.text) {
       return const PasswordSaveResult(
-        message: 'A confirmação da senha não confere.',
+        message: 'A confirma\u00e7\u00e3o da senha n\u00e3o confere.',
         shouldCloseSheet: false,
       );
     }

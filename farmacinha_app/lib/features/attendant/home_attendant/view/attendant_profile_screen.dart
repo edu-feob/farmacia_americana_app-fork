@@ -136,7 +136,12 @@ class _AttendantProfileScreenState extends State<AttendantProfileScreen> {
                       _MenuRow(
                         icon: Icons.lock_outline_rounded,
                         label: 'Segurança e Senha',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.attendantSecurity,
+                          );
+                        },
                       ),
                       _MenuRow(
                         icon: Icons.help_outline_rounded,
