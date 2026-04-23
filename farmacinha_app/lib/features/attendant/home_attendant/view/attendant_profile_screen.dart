@@ -141,7 +141,12 @@ class _AttendantProfileScreenState extends State<AttendantProfileScreen> {
                       _MenuRow(
                         icon: Icons.help_outline_rounded,
                         label: 'Ajuda e Suporte',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.attendantSupport,
+                          );
+                        },
                         showDivider: false,
                       ),
                     ],
